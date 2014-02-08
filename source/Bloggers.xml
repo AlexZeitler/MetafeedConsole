@@ -1,0 +1,937 @@
+﻿<?xml version="1.0" standalone="yes"?>
+<bloggers>
+	<blogger>
+		<name>Albert Weinert</name>
+		<blogurl>http://der-albert.com/</blogurl>
+		<blogfeedurl>http://der-albert.com/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Alex Bierhaus</name>
+		<blogurl>http://vb-magazin.de/forums/blogs/alexbierhaus/default.aspx</blogurl>
+		<blogfeedurl>http://vb-magazin.de/forums/blogs/alexbierhaus/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+
+  <blogger>
+    <name>Alexander Schmidt</name>
+    <blogurl>http://www.codingfreaks.de/</blogurl>
+    <blogfeedurl>http://www.codingfreaks.de/feed/</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  
+
+  <blogger>
+    <name>Alexander Zeitler</name>
+    <blogurl>http://blog.alexonasp.net/</blogurl>
+    <blogfeedurl>http://blog.alexonasp.net/syndication.axd?category=78b8c08f-64db-409d-b37c-d54f8add9c6d</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+
+
+<!-- 	<blogger>
+		<name>Alex Zeitler [.NET Fu TV]</name>
+		<blogurl>http://dotnetfu.tv/</blogurl>
+		<blogfeedurl>http://dotnetfu.tv/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>	 -->
+  
+  <blogger>
+		<name>Andre Loker</name>
+		<blogurl>http://blog.andreloker.de/</blogurl>
+		<blogfeedurl>http://blog.andreloker.de/category/feed/DotNetGerman-Bloggers.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+	
+	
+	<blogger>
+		<name>André Krämer</name>
+		<blogurl>http://blog.codemurai.de/</blogurl>
+		<blogfeedurl>http://feeds2.feedburner.com/codemurai/qlrN</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Andreas Schlapsi</name>
+		<blogurl>http://www.andreas-schlapsi.at/</blogurl>
+		<blogfeedurl>http://www.andreas-schlapsi.at/category/net-entwicklung/feed</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Andreas Seebauer</name>
+		<blogurl>http://blog.aztec-project.org/author/ase/</blogurl>
+		<blogfeedurl>http://blog.aztec-project.org/author/ase/feed</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!-- <blogger>
+		<name>Andreas u. Roys Blog</name>
+		<blogurl>http://www.technetbloggers.de/</blogurl>
+		<blogfeedurl>http://www.technetbloggers.de/?feed=rss2</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+
+	<blogger>
+		<name>Benjamin Gopp</name>
+		<blogurl>http://hiq-software.blogspot.com/</blogurl>
+		<blogfeedurl>http://hiq-software.blogspot.com/feeds/posts/default</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>
+
+  <blogger>
+    <name>Bernd Hengelein</name>
+    <blogurl>http://berndhengelein.de/</blogurl>
+    <blogfeedurl>http://berndhengelein.de/feed/</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+	<!-- <blogger>
+		<name>Boas Enkler</name>
+		<blogurl>http://enkler.tempw7.internet1.de/dasblog/dasblogce/default.aspx</blogurl>
+		<blogfeedurl>http://enkler.tempw7.internet1.de/dasblog/dasblogce/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+
+	<blogger>
+		<name>Chris Cluss</name>
+		<blogurl>http://nibblersrevenge.cluss.de/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/chris_cluss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Christian Binder [MS]</name>
+		<blogurl>http://blogs.msdn.com/cbinder/</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/cbinder/rss.xml</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	
+	<blogger>
+		<name>Christian Kiefer</name>
+		<blogurl>http://christian.bloggingon.net/</blogurl>
+		<blogfeedurl>http://christian.bloggingon.net/Rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Christina Hirth </name>
+		<blogurl>http://www.yellow-brick-code.org/</blogurl>
+		<blogfeedurl>http://www.yellow-brick-code.org/?feed=rss2</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Christoph Schmid</name>
+		<blogurl>http://schmidi.bloggingon.net/</blogurl>
+		<blogfeedurl>http://schmidi.bloggingon.net/Rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	 <blogger>
+    <name>codefest.at [MS]</name>
+    <blogurl>http://www.codefest.at/</blogurl>
+    <blogfeedurl>http://feeds.feedburner.com/Codefest?format=xml</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+	<blogger>
+		<name>Code-Inside Blog</name>
+		<blogurl>http://code-inside.de/blog/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/Code-insideBlog</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Constantin Klein</name>
+		<blogurl>http://kostjaklein.wordpress.com/</blogurl>
+		<blogfeedurl>http://kostjaklein.wordpress.com/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Damir Tomicic</name>
+		<blogurl>http://www.tomicic.de/</blogurl>
+		<blogfeedurl>http://tomicic.de/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Dani Meier</name>
+		<blogurl>http://blog.nettigkeiten.ch/</blogurl>
+		<blogfeedurl>http://blog.nettigkeiten.ch/?feed=rss2</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+ <!--  <blogger>
+    <name>Daniel Fisher</name>
+    <blogurl>http://lennybacon.com</blogurl>
+    <blogfeedurl>http://lennybacon.com/SyndicationService.asmx/GetRssCategory?categoryName=German</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+ -->
+	<blogger>
+		<name>Daniel Müller</name>
+		<blogurl>http://www.dotnetnukeblog.de/</blogurl>
+		<blogfeedurl>http://www.dotnetnukeblog.de/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+  <blogger>
+    <name>Daniel Schädler</name>
+    <blogurl>http://schaedlerdaniel.wordpress.com/</blogurl>
+    <blogfeedurl>http://schaedlerdaniel.wordpress.com/feed/</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  <blogger>
+    <name>David Tielke</name>
+    <blogurl>http://www.david-tielke.de/</blogurl>
+    <blogfeedurl>http://david-tielke.de/category/feed/NET.aspx</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+<!-- 
+	<blogger>
+		<name>Dieter Föttinger</name>
+		<blogurl>http://deedee.brainstream.net/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/DeedeesBlog</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+ -->
+  <blogger>
+    <name>Dmitrij Doberstein</name>
+    <blogurl>http://didos-blog.blogspot.com/</blogurl>
+    <blogfeedurl>http://feeds.feedburner.com/Didos-blog</blogfeedurl>
+    <feedtype>ATOM</feedtype>
+  </blogger>
+
+  <blogger>
+    <name>Dirk Primbs [MS]</name>
+    <blogurl>http://blogs.msdn.com/dirkpr/</blogurl>
+    <blogfeedurl>http://blogs.msdn.com/dirkpr/Rss.aspx</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  <blogger>
+		<name>DotNet Community Austria</name>
+		<blogurl>http://blogs.dotnet-austria.at/</blogurl>
+		<blogfeedurl>http://blogs.dotnet-austria.at/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Falco Ostermann</name>
+		<blogurl>http://msscorner.de</blogurl>
+		<blogfeedurl>http://msscorner.de/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Florian Geisenhof</name>
+		<blogurl>http://blog.alpinesoft.de/</blogurl>
+		<blogfeedurl>http://wordpress.alpinesoft.de/index.php/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Florian Mätschke</name>
+		<blogurl>http://blogs.dotnet-braunschweig.de/Florian/</blogurl>
+		<blogfeedurl>http://blogs.dotnet-braunschweig.de/Florian/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+	<blogger>
+		<name>Florian Schmidt</name>
+		<blogurl>http://blog.it5000.de/</blogurl>
+		<blogfeedurl>http://blog.it5000.de/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+
+  <blogger>
+    <name>Frank Pfattheicher</name>
+    <blogurl>http://fpfbaden.wordpress.com/</blogurl>
+    <blogfeedurl>http://fpfbaden.wordpress.com/feed/atom/</blogfeedurl>
+    <feedtype>ATOM</feedtype>
+  </blogger>
+
+
+  <!--<blogger>
+		<name>Florian Strahberger</name>
+		<blogurl>http://dotnet-visions.de.z.seekdotnet.com/blog/index.php</blogurl>
+		<blogfeedurl>http://dotnet-visions.de.z.seekdotnet.com/blog/rss.php</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>-->
+	
+	<!-- <blogger>
+		<name>Glengamoi Blogs</name>
+		<blogurl>http://glengamoi.com/blogs/</blogurl>
+		<blogfeedurl>http://glengamoi.com/blogs/MainFeed.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+	
+	<blogger>
+		<name>Golo Roden</name>
+		<blogurl>http://www.heise.de/developer/the-next-big-thing-1790061.html</blogurl>
+		<blogfeedurl>http://www.heise.de/developer/rss/the-next-big-thing/blog-atom.xml</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Gordon Breuer</name>
+		<blogurl>http://gordon-breuer.de/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/AnheledirDotnetgermanBloggers</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Gregor Biswanger</name>
+		<blogurl>http://webenliven-space.de/dotnetblog/</blogurl>
+		<blogfeedurl>http://webenliven-space.de/dotnetblog/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+	<blogger>
+		<name>Hagen Siegel</name>
+		<blogurl>http://yellow-rainbird.de/blogs/rainbird/default.aspx</blogurl>
+		<blogfeedurl>http://yellow-rainbird.de/blogs/rainbird/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+	
+	<blogger>
+		<name>Hannes Bischof</name>
+		<blogurl>http://www.hannes-bischof.de/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/netWorkerNetStuff</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Hans-Peter Schelian</name>
+		<blogurl>http://blog.schelian.de/</blogurl>
+		<blogfeedurl>http://blog.schelian.de/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+  <!--<blogger>
+    <name>Harald M. Genauck</name>
+    <blogurl>http://www.aboutdotnet.de/</blogurl>
+    <blogfeedurl>http://www.aboutdotnet.de/communityfeed.ashx</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>-->
+
+	<!-- <blogger>
+		<name>Hardy Pickert</name>
+		<blogurl>http://hardypickert.de/blog/</blogurl>
+		<blogfeedurl>http://hardypickert.de/blog/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+
+  <blogger>
+    <name>Hendrik Lösch</name>
+    <blogurl>http://just-about.net/</blogurl>
+    <blogfeedurl>http://www.just-about.net/category/community/dotnetgerman-bloggers/feed</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  <blogger>
+		<name>Holger Sirtl</name>
+		<blogurl>http://blogs.msdn.com/hsirtl/</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/hsirtl/rss.xml</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+  <blogger>
+    <name>Holger Schwichtenberg</name>
+    <blogurl>http://www.heise.de/developer/der-dotnet-doktor-1292.html</blogurl>
+    <blogfeedurl>http://www.heise.de/developer/rss/dotnet-doktor/blog-atom.xml</blogfeedurl>
+    <feedtype>ATOM</feedtype>
+  </blogger>
+
+  <blogger>
+    <name>Hozelito Vajcek</name>
+    <blogurl>http://dotnet-forum.de/blogs/thearchitect/</blogurl>
+    <blogfeedurl>http://dotnet-forum.de/blogs/thearchitect/rss.aspx</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+	<blogger>
+		<name>Ilker Cetinkaya</name>
+		<blogurl>http://ilker.de/</blogurl>
+		<blogfeedurl>http://www.ilker.de/feed.xml</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jan Geisbauer</name>
+		<blogurl>http://geisbauer.blogspot.com/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/geisbauer</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jan Welker</name>
+		<blogurl>http://blog.jan-welker.de/</blogurl>
+		<blogfeedurl>http://blog.jan-welker.de/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+	<blogger>
+		<name>Jan Christian Selke</name>
+		<blogurl>http://jcselke.blogspot.com/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/blogspot/jcselke</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jan-Cornelius Molnar</name>
+		<blogurl>http://vb-magazin.de/forums/blogs/janm/</blogurl>
+		<blogfeedurl>http://vb-magazin.de/forums/blogs/janm/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jana Paetzold [MS]</name>
+		<blogurl>http://blogs.msdn.com/janapa/</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/janapa/rss.xml</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jens Häupel [MS]</name>
+		<blogurl>http://blogs.msdn.com/jensha/</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/jensha/rss.xml</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jens Hofmann</name>
+		<blogurl>http://blog.dotnet-expert.de/</blogurl>
+		<blogfeedurl>http://blog.dotnet-expert.de/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jens Konerow</name>
+		<blogurl>http://blog.jenskonerow.de/</blogurl>
+		<blogfeedurl>http://blog.jenskonerow.de/blog/rss.ashx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!-- <blogger>
+		<name>Jens Peter Kleinau</name>
+		<blogurl>http://www.codecomplete.de/blogs/xamlblog/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/XamlBlog</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+
+	<blogger>
+		<name>Jens Winter</name>
+		<blogurl>http://jenswinter.com/</blogurl>
+		<blogfeedurl>http://jenswinter.com/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Jochen Kalmbach</name>
+		<blogurl>http://blog.kalmbach-software.de/de/</blogurl>
+		<blogfeedurl>http://blog.kalmbach-software.de/de/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+  <blogger>
+    <name>Johnny Graber</name>
+    <blogurl>http://graberj.wordpress.com/</blogurl>
+    <blogfeedurl>http://graberj.wordpress.com/tag/net/feed/</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+	<!--<blogger>
+		<name>Just a Code Team Blog</name>
+		<blogurl>http://justacodeblog.blogspot.com/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/JustACodeTeamBlog</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>-->
+
+	<blogger>
+		<name>Jürgen Gutsch</name>
+		<blogurl>http://www.aspnetzone.de/blogs/juergengutsch/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/jgutsch</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!-- <blogger>
+		<name>Kai Gloth</name>
+		<blogurl>http://blog.veloursnebel.de/</blogurl>
+		<blogfeedurl>http://blog.veloursnebel.de/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+ -->
+	<blogger>
+		<name>Karim El Jed</name>
+		<blogurl>http://www.eljed.de/blog/</blogurl>
+		<blogfeedurl>http://www.eljed.de/blog/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+	<blogger>
+		<name>Kay Giza [MS]</name>
+		<blogurl>http://www.giza-blog.de/</blogurl>
+		<blogfeedurl>http://www.giza-blog.de/SyndicationService.asmx/GetRssCategory?categoryName=Development%20and%20Related</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Klaus Aschenbrenner</name>
+		<blogurl>http://www.csharp.at/blog/</blogurl>
+		<blogfeedurl>http://www.csharp.at/blog/SyndicationService.asmx/GetRssCategory?categoryName=.NET%20German</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Klaus Bock</name>
+		<blogurl>http://blog.klaus-b.net/</blogurl>
+		<blogfeedurl>http://blog.klaus-b.net/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Lars Keller</name>
+		<blogurl>http://blog.lars-keller.net/</blogurl>
+		<blogfeedurl>http://feeds2.feedburner.com/LarsKellerinspiredBynet</blogfeedurl>
+		<feedtype>Atom</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Lars Schmitt</name>
+		<blogurl>http://dotnet-forum.de/blogs/larsschmitt/</blogurl>
+		<blogfeedurl>http://dotnet-forum.de/blogs/larsschmitt/atom.aspx</blogfeedurl>
+		<feedtype>Atom</feedtype>
+	</blogger>
+
+  <blogger>
+    <name>Manfred Steyer</name>
+    <blogurl>http://www.softwarearchitekt.at/</blogurl>
+    <blogfeedurl>http://www.softwarearchitekt.at/syndication.axd</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+	<blogger>
+		<name>Manuel Sidler</name>
+		<blogurl>http://ichbloggeauf.blogspot.com/</blogurl>
+		<blogfeedurl>http://ichbloggeauf.blogspot.com/feeds/posts/default</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Manuel Wenk</name>
+		<blogurl>http://www.devmagnetic.de/</blogurl>
+		<blogfeedurl>http://www.devmagnetic.de/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!--<blogger>
+		<name>Marc Hoeppner</name>
+		<blogurl>http://blogs.neogeo.com/blogs/marchoeppner/default.aspx</blogurl>
+		<blogfeedurl>http://blogs.neogeo.com/blogs/marchoeppner/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>-->
+
+	<blogger>
+		<name>Marco Scheel</name>
+		<blogurl>http://marcoscheel.de/</blogurl>
+		<blogfeedurl>http://feeds.marcoscheel.de/marcoscheel</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!--<blogger>
+		<name>Marco Wiedemeyer</name>
+		<blogurl>http://blog.mwiedemeyer.de/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/mwiedemeyer</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>-->
+
+	<blogger>
+		<name>Mario Meir-Huber</name>
+		<blogurl>http://vb-magazin.de/forums/blogs/mario_meir-huber/default.aspx</blogurl>
+		<blogfeedurl>http://vb-magazin.de/forums/blogs/mario_meir-huber/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+  <blogger>
+    <name>Mario Noack</name>
+    <blogurl>http://blog.topdf.de/</blogurl>
+    <blogfeedurl><![CDATA[ http://blog.topdf.de/?feed=rss2&cat=8 ]]></blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  <blogger>
+    <name>Mario Priebe</name>
+    <blogurl>http://www.biggle.de/</blogurl>
+    <blogfeedurl>http://feeds2.feedburner.com/BigglesBlog</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+
+  <blogger>
+		<name>Martin Hey</name>
+		<blogurl>http://www.uniquesoftware.de/blog/de/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/discoveringmicrosofttechnologies</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Martin Richter</name>
+		<blogurl>http://blog.m-ri.de/</blogurl>
+		<blogfeedurl>http://blog.m-ri.de/index.php/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+<!-- 	<blogger>
+		<name>Mathias Raacke</name>
+		<blogurl>http://www.outofcoffeeexception.de</blogurl>
+		<blogfeedurl>http://www.outofcoffeeexception.de/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+ -->
+	<blogger>
+		<name>Michael Hannekum</name>
+		<blogurl>http://aspnetzone.de/blogs/hahne/default.aspx</blogurl>
+		<blogfeedurl>http://aspnetzone.de/blogs/hahne/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Michael Schwarz</name>
+		<blogurl>http://michael-schwarz.blogspot.com/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/michaelsgermanblog</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!--<blogger>
+		<name>msdn Austria [MS]</name>
+		<blogurl>http://blogs.msdn.com/msdnat/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/MsdnAustria</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>-->
+
+ 
+
+  <blogger>
+		<name>Norbert Eder</name>
+		<blogurl>http://devtyr.norberteder.com/</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/devtyr</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Oliver Michalski</name>
+		<blogurl>http://connectedsystems-de.blogspot.com/</blogurl>
+		<blogfeedurl>http://connectedsystems-de.blogspot.com/feeds/posts/default</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>	
+
+
+	<blogger>
+		<name>Patrick Richert</name>
+		<blogurl>http://www.patrick-richert.de/</blogurl>
+		<blogfeedurl>http://www.patrick-richert.de/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Paul Mizel</name>
+		<blogurl>http://blog.darkleo.com</blogurl>
+		<blogfeedurl>http://www.darkleo.com/blog/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Peter Bucher</name>
+		<blogurl>http://www.aspnetzone.de/blogs/peterbucher/</blogurl>
+		<blogfeedurl>http://www.aspnetzone.de/blogs/peterbucher/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Peter Schneider</name>
+		<blogurl>http://weblogs.asp.net/pschneider</blogurl>
+		<blogfeedurl>http://weblogs.asp.net/pschneider/atom.aspx</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>
+
+	<!-- <blogger>
+		<name>Philip Proplesch</name>
+		<blogurl>http://philipproplesch.de/</blogurl>
+		<blogfeedurl>http://philipproplesch.de/Syndication/Rss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+
+	<blogger>
+		<name>ppedv Team Blog</name>
+		<blogurl>http://blog.ppedv.de/</blogurl>
+		<blogfeedurl>http://blog.ppedv.de/syndication.axd?format=rss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Rainer Schuster</name>
+		<blogurl>http://dotnet-forum.de/blogs/rainerschuster/</blogurl>
+		<blogfeedurl>http://dotnet-forum.de/blogs/rainerschuster/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Ralf Schoch</name>
+		<blogurl>http://blog.codeso.eu/</blogurl>
+		<blogfeedurl>http://blog.codeso.eu/SyndicationService.asmx/GetRssCategory?categoryName=.NET</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Ralf Westphal</name>
+		<blogurl>http://ralfw.blogspot.com/</blogurl>
+		<blogfeedurl>http://ralfw.blogspot.com/feeds/posts/default?alt=rss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Rene Brunner</name>
+		<blogurl>http://megos.wordpress.com/</blogurl>
+		<blogfeedurl>http://megos.wordpress.com/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+	
+	<blogger>
+		<name>Rene Drescher-Hackel</name>
+		<blogurl>http://weblog.drescher-hackel.de/</blogurl>
+		<blogfeedurl>http://weblog.drescher-hackel.de/65/getrss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+<!-- 
+	<blogger>
+		<name>Rene Kuss</name>
+		<blogurl>http://blog.data-worx.de/</blogurl>
+		<blogfeedurl>http://blog.data-worx.de/category/feed/DotNetGerman-Bloggers.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+	
+	<blogger>
+		<name>Robert Meyer</name>
+		<blogurl>http://sqlpractice.wordpress.com/</blogurl>
+		<blogfeedurl>http://sqlpractice.wordpress.com/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>	
+
+	<blogger>
+		<name>Robert Wachtel</name>
+		<blogurl>http://blog.robertsoft.de</blogurl>
+		<blogfeedurl>http://blog.robertsoft.de/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Roberto Bez</name>
+		<blogurl>http://devangelist.de/blog/</blogurl>
+		<blogfeedurl>http://devangelist.de/blog/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!--<blogger>
+		<name>Ruprecht Dröge</name>
+		<blogurl>http://blogs.sqlserverfaq.de</blogurl>
+		<blogfeedurl>http://blogs.sqlserverfaq.de/_layouts/listfeed.aspx?List=%7B1D5DE6C9-F560-4DC3-BC29-434C3F3DE2A6%7D</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>-->
+
+  <blogger>
+    <name>Sascha Dittmann</name>
+    <blogurl>http://www.sascha-dittmann.de/</blogurl>
+    <blogfeedurl>http://www.sascha-dittmann.de/category/syndication.axd?category=a5cb3ab9-814d-4a70-93f5-2708ddcf5570</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  <blogger>
+    <name>Sebastian Gross</name>
+    <blogurl>http://blog.bigbasti.com/</blogurl>
+    <blogfeedurl>http://blog.bigbasti.com/category/net/feed</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+
+  <blogger>
+		<name>Sebastian Jancke</name>
+		<blogurl>http://sjancke.blogspot.com</blogurl>
+		<blogfeedurl>http://feeds.feedburner.com/sjancke</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Sebastian Weber [MS]</name>
+		<blogurl>http://blogs.msdn.com/sebweber/default.aspx</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/sebweber/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+  <blogger>
+    <name>Stefan Henneken</name>
+    <blogurl>http://stefanhenneken.wordpress.com/</blogurl>
+    <blogfeedurl>http://stefanhenneken.wordpress.com/feed/</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  <blogger>
+    <name>Stefan Kölle</name>
+    <blogurl>http://blog.aztec-project.org/author/sko/</blogurl>
+    <blogfeedurl>http://blog.aztec-project.org/author/sko/feed</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+
+  <blogger>
+		<name>Stefan Lange</name>
+		<blogurl>http://www.st-lange.net/</blogurl>
+		<blogfeedurl>http://www.st-lange.net/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Stefan Lieser</name>
+		<blogurl>http://www.lieser-online.de/</blogurl>
+		<blogfeedurl>http://www.lieser-online.de/blog/?feed=rss2</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+  <blogger>
+    <name>Stefan Stolz</name>
+    <blogurl>http://nettesoftware.blogspot.com/</blogurl>
+    <blogfeedurl>http://nettesoftware.blogspot.com/feeds/posts/default</blogfeedurl>
+    <feedtype>ATOM</feedtype>
+  </blogger>
+
+
+  <blogger>
+		<name>Sven Hubert</name>
+		<blogurl>http://www.tfsblog.de/</blogurl>
+		<blogfeedurl>http://tfsblog.de/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<!-- <blogger>
+		<name>Sven Schneider</name>
+		<blogurl>http://www.netzsynapse.de/future/</blogurl>
+		<blogfeedurl>http://www.netzsynapse.de/future/?feed=rss2</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger> -->
+
+	<blogger>
+		<name>Swiss DPE Team [MS]</name>
+		<blogurl>http://blogs.msdn.com/swiss_dpe_team/default.aspx</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/swiss_dpe_team/rss.xml</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Thomas Bandt</name>
+		<blogurl>http://blog.thomasbandt.de/39/de/blog.html</blogurl>
+		<blogfeedurl>http://blog.thomasbandt.de/Library/RSS/DevFeed.aspx?EB_RenderRSS=true</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Thomas Christian</name>
+		<blogurl>http://blog.aztec-project.org/author/tch/</blogurl>
+		<blogfeedurl>http://blog.aztec-project.org/author/tch/feed</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Thomas Mentzel</name>
+		<blogurl>http://blog.mentzel.name/</blogurl>
+		<blogfeedurl>http://blog.mentzel.name/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+	
+	<!-- <blogger>
+		<name>Thomas Müller</name>
+		<blogurl>http://www.tom-mue.de/blog/index.html</blogurl>
+		<blogfeedurl>http://www.tom-mue.de/blog/rss/atom.xml</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>
+ -->
+	<blogger>
+		<name>Thomas Schissler</name>
+		<blogurl>http://www.artiso.com/problog/</blogurl>
+		<blogfeedurl>http://www.artiso.com/ProBlog/SyndicationService.asmx/GetRss</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Thomas Sohnrey</name>
+		<blogurl>http://teddysohnrey.blogspot.com/</blogurl>
+		<blogfeedurl>http://teddysohnrey.blogspot.com/feeds/posts/default</blogfeedurl>
+		<feedtype>ATOM</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Tim Fischer [MS]</name>
+		<blogurl>http://blogs.msdn.com/timfis/</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/timfis/rss_tag_German.xml</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+	<blogger>
+		<name>Thorsten Hans</name>
+		<blogurl>http://dotnet-forum.de/blogs/thorstenhans/</blogurl>
+		<blogfeedurl>http://dotnet-forum.de/blogs/thorstenhans/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+	<blogger>
+		<name>Tom Wendel [MS]</name>
+		<blogurl>http://blogs.msdn.com/b/twendel/</blogurl>
+		<blogfeedurl>http://blogs.msdn.com/b/twendel/rss.aspx</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+ <!--  <blogger>
+    <name>Torsten Hufsky</name>
+    <blogurl>http://www.exxpressions.de/</blogurl>
+    <blogfeedurl>http://torsten.zefix.info/wordpress2/?feed=rss2</blogfeedurl>
+    <feedtype>RSS</feedtype>
+  </blogger>
+ -->
+	<blogger>
+		<name>Torsten Weber</name>
+		<blogurl>http://blogs.compactframework.de/Torsten.Weber</blogurl>
+		<blogfeedurl>http://blogs.compactframework.de/Torsten.Weber/SyndicationService.asmx/GetRssCategory?categoryName=DotNetGerman%20Bloggers</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+
+	<blogger>
+		<name>Uli Armbruster</name>
+		<blogurl>http://uliarmbruster.wordpress.com</blogurl>
+		<blogfeedurl>https://uliarmbruster.wordpress.com/category/language/german/feed/</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+	<blogger>
+		<name>Wolfgang Kluge</name>
+		<blogurl>http://gehirnwindung.de/</blogurl>
+		<blogfeedurl>http://gehirnwindung.de/syndication.axd</blogfeedurl>
+		<feedtype>RSS</feedtype>
+	</blogger>
+
+</bloggers>
