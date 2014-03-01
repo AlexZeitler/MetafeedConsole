@@ -25,7 +25,7 @@ namespace MetaFeedConsole {
 			watch.Start();
 			MainAsync().Wait();
 			watch.Stop();
-			ConsoleWrite(watch.Elapsed.Seconds.ToString(), ConsoleColor.Red);
+			ConsoleWrite(watch.Elapsed.TotalSeconds.ToString(), ConsoleColor.Red);
 			Console.ReadLine();
 		}
 
@@ -149,18 +149,19 @@ namespace MetaFeedConsole {
                 // select all bloggers from xml
                 ConsoleWrite("Selecting Bloggers ", ConsoleColor.White);
 
-                IEnumerable<Blogger> bloggers = from b in xml.Descendants("blogger")
-                               orderby b.Element("name").Value ascending
-                               select new Blogger
-                               {
-                                   name = b.Element("name").Value,
-                                   blogurl = b.Element("blogurl").Value,
-                                   blogfeedurl = b.Element("blogfeedurl").Value,
-                                   feedtype = b.Element("feedtype").Value
-                               };
+                var bloggers = (from b in xml.Descendants("blogger")
+	                orderby b.Element("name").Value ascending
+	                select new Blogger
+	                {
+		                name = b.Element("name").Value,
+		                blogurl = b.Element("blogurl").Value,
+		                blogfeedurl = b.Element("blogfeedurl").Value,
+		                feedtype = b.Element("feedtype").Value
+	                }).ToList();
 
 
-                try {
+	            
+	            try {
                     int test = bloggers.Count();
                     ConsoleWriteLine("succeeded", ConsoleColor.Green);
                 }
