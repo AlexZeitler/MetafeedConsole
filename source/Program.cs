@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
@@ -14,10 +18,21 @@ using Microsoft.Practices.EnterpriseLibrary.Logging;
 
 namespace MetaFeedConsole {
     class Program {
-        static void Main(string[] args)
+
+		static void Main()
+		{
+			var watch = new Stopwatch();
+			watch.Start();
+			MainAsync().Wait();
+			watch.Stop();
+			ConsoleWrite(watch.Elapsed.Seconds.ToString(), ConsoleColor.Red);
+			Console.ReadLine();
+		}
+
+        static async Task MainAsync()
         {
             try {
-                Logger.Write(new string("-".ToCharArray()[0], 80));
+				//// Logger.Write(new string("-".ToCharArray()[0], 80));
 
                 ConsoleWriteLine("DotNetGermanBloggers Meta Feed Console", ConsoleColor.Yellow, false);
                 Console.WriteLine();
@@ -122,7 +137,7 @@ namespace MetaFeedConsole {
                 ConsoleWriteLine("succeeded.", ConsoleColor.Green);
 
                 // create List for all items 
-                List<SyndicationItem> feedItems = new List<SyndicationItem>();
+                var feedItems = new ConcurrentBag<SyndicationItem>();
 
                 // load xml with all bloggers
                 ConsoleWrite(string.Format("Reading {0} ", inputBlogFilePath), ConsoleColor.White);
@@ -134,9 +149,9 @@ namespace MetaFeedConsole {
                 // select all bloggers from xml
                 ConsoleWrite("Selecting Bloggers ", ConsoleColor.White);
 
-                var bloggers = from b in xml.Descendants("blogger")
+                IEnumerable<Blogger> bloggers = from b in xml.Descendants("blogger")
                                orderby b.Element("name").Value ascending
-                               select new
+                               select new Blogger
                                {
                                    name = b.Element("name").Value,
                                    blogurl = b.Element("blogurl").Value,
@@ -156,178 +171,32 @@ namespace MetaFeedConsole {
                 }
 
                 // iterate through bloggers
-                foreach (var blogger in bloggers) {
 
-                    ConsoleWrite(string.Format("Parsing / adding Items from \"{0}\" ", blogger.name),
-                        ConsoleColor.White);
+	            var client = new HttpClient();
 
-                    try {
+	            var tasks = bloggers.Select(async item =>
+	            {
+		            // some pre stuff
+		            await GetItems(item, client, feedItems);
 
+		            // some post stuff
+	            });
+	            await Task.WhenAll(tasks);
+				
 
-                        // check feed type
-                        switch (blogger.feedtype.ToLower()) {
-                            case "rss":
-
-                                // parse Rss feed
-                                Rss20FeedFormatter rssSerializer = new Rss20FeedFormatter();
-								WebResponse rssWebResponse;
-								HttpWebRequest rssWebRequest = (HttpWebRequest) System.Net.WebRequest.Create(blogger.blogfeedurl);
-                                rssWebRequest.UserAgent = "DotNetGerman Bloggers";
-								rssWebResponse = rssWebRequest.GetResponse();
-
-                        		StreamReader rssStreamReader = new StreamReader(rssWebResponse.GetResponseStream(), Encoding.UTF8);
-								
-								 
-                                XmlReader rssReader = XmlReader.Create(rssStreamReader);
-                                rssSerializer.ReadFrom(rssReader);
-                                SyndicationFeed rssFeed = rssSerializer.Feed;
-                                foreach (SyndicationItem item in rssFeed.Items) {
-
-                                    SyndicationItem newItem = new SyndicationItem();
-                                    newItem.BaseUri = item.BaseUri;
-                                    //newItem.Categories = item.Categories;
-
-                                    newItem.Content = item.Content;
-                                    //newItem.ElementExtensions = item.ElementExtensions;
-
-                                    TextSyndicationContent copyright =
-                                        new TextSyndicationContent(blogger.name);
-
-                                    newItem.Copyright = copyright;
-
-                                    newItem.Id = item.Id;
-                                    newItem.LastUpdatedTime = item.LastUpdatedTime;
-                                    //newItem.Links = item.Links;
-                                    foreach (SyndicationLink link in item.Links) {
-                                        newItem.Links.Add(link);
-                                    }
-                                    newItem.PublishDate = item.PublishDate;
-                                    newItem.Summary = item.Summary;
-                                    newItem.Title = item.Title;
-
-                                    if (item.ElementExtensions.Count > 0) {
-                                        XmlReader reader = item.ElementExtensions.GetReaderAtElementExtensions();
-                                        while (reader.Read()) {
-                                            if ("content:encoded" == reader.Name) {
-                                                SyndicationContent content =
-                                                    SyndicationContent.CreateHtmlContent(reader.ReadString());
-                                                newItem.Content = content;
-                                            }
-                                        }
-
-                                    }
+				//foreach (var blogger in bloggers)
+				//{
+				//	await GetItems(blogger, client, feedItems);
+				//}
 
 
-                                    //assign author name explicitly because email is
-                                    //used by default
-                                    SyndicationPerson author = new SyndicationPerson();
-                                    author.Name = blogger.name;
-                                    newItem.Authors.Add(author);
-
-                                    newItem.Contributors.Add(author);
-
-                                    XmlDocument doc = new XmlDocument();
-                                    string creator = string.Format("<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>", blogger.name);
-                                    doc.LoadXml(creator);
-                                    SyndicationElementExtension insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
-
-                                    newItem.ElementExtensions.Add(insertext);
-
-                                    feedItems.Add(newItem);
-                                }
-                                break;
-
-
-                            case "atom":
-
-                                // parse Atom feed
-                                Atom10FeedFormatter atomSerializer = new Atom10FeedFormatter();
-								WebResponse atomWebResponse;
-								HttpWebRequest atomWebRequest = (HttpWebRequest)WebRequest.Create(blogger.blogfeedurl);
-                                atomWebRequest.UserAgent = "DotNetGerman Bloggers";
-								atomWebResponse = atomWebRequest.GetResponse();
-
-								StreamReader atomStreamReader = new StreamReader(atomWebResponse.GetResponseStream(), Encoding.UTF8);
-								
-                                XmlReader atomReader = XmlReader.Create(atomStreamReader);
-                                atomSerializer.ReadFrom(atomReader);
-                                SyndicationFeed atomFeed = atomSerializer.Feed;
-
-                                foreach (SyndicationItem item in atomFeed.Items) {
-
-                                    SyndicationItem newItem = new SyndicationItem();
-                                    newItem.BaseUri = item.BaseUri;
-                                    //newItem.Categories = item.Categories;
-
-                                    newItem.Content = item.Content;
-                                    //newItem.ElementExtensions = item.ElementExtensions;
-
-                                    newItem.Id = item.Id;
-                                    newItem.LastUpdatedTime = item.LastUpdatedTime;
-                                    //newItem.Links = item.Links;
-                                    foreach (SyndicationLink link in item.Links) {
-                                        newItem.Links.Add(link);
-                                    }
-                                    newItem.PublishDate = item.PublishDate;
-                                    newItem.Summary = item.Summary;
-                                    newItem.Title = item.Title;
-
-                                    TextSyndicationContent copyright =
-    new TextSyndicationContent(blogger.name);
-
-                                    newItem.Copyright = copyright;
-
-
-                                    if (item.ElementExtensions.Count > 0) {
-                                        XmlReader reader = item.ElementExtensions.GetReaderAtElementExtensions();
-                                        while (reader.Read()) {
-                                            if ("content:encoded" == reader.Name) {
-                                                SyndicationContent content =
-                                                    SyndicationContent.CreatePlaintextContent(reader.ReadString());
-                                                newItem.Content = content;
-                                            }
-                                        }
-
-                                    }
-
-
-                                    // assign author name explicitly because email is
-                                    // used by default
-                                    SyndicationPerson author = new SyndicationPerson();
-                                    author.Name = blogger.name;
-                                    newItem.Authors.Add(author);
-
-                                    newItem.Contributors.Add(author);
-
-                                    XmlDocument doc = new XmlDocument();
-                                    string creator = string.Format("<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>", blogger.name);
-                                    doc.LoadXml(creator);
-                                    SyndicationElementExtension insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
-
-                                    newItem.ElementExtensions.Add(insertext);
-
-                                    feedItems.Add(newItem);
-                                }
-                                break;
-                            default:
-                                break;
-
-                        }
-                        ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-                    }
-                    catch (Exception ex) {
-                        ConsoleWriteLine(string.Format("failed with exception {0}", ex.Message), ConsoleColor.Red);
-                    }
-
-
-                }
-
-
-                // sort items by date descending
+	            // sort items by date descending
 
                 ConsoleWrite("Sorting items ", ConsoleColor.White);
 
-                feedItems.Sort(
+	            var feedItemsList = feedItems.ToList();
+
+				feedItemsList.Sort(
                     delegate(SyndicationItem x, SyndicationItem y) {
                         return DateTime.Compare(y.PublishDate.DateTime, x.PublishDate.DateTime);
                     });
@@ -340,11 +209,11 @@ namespace MetaFeedConsole {
                 // get the configured number of items
                 if (feedItems.Count >= outputItemsNumber) {
                     ConsoleWrite(string.Format("Selecting {0} items ", outputItemsNumber), ConsoleColor.White);
-                    metaFeedItems = feedItems.GetRange(0, outputItemsNumber);
+					metaFeedItems = feedItemsList.GetRange(0, outputItemsNumber);
                 }
                 else {
                     ConsoleWrite(string.Format("Selecting {0} items ", feedItems.Count), ConsoleColor.White);
-                    metaFeedItems = feedItems;
+					metaFeedItems = feedItemsList;
                 }
 
                 ConsoleWriteLine("succeeded.", ConsoleColor.Green);
@@ -446,7 +315,7 @@ namespace MetaFeedConsole {
                 }
 
                 ConsoleWriteLine("completed", ConsoleColor.Green);
-                Logger.Write(new string("-".ToCharArray()[0], 80));
+                // Logger.Write(new string("-".ToCharArray()[0], 80));
                 ConsoleWriteLine(string.Empty, ConsoleColor.Gray);
             }
             catch (Exception ex) {
@@ -465,7 +334,183 @@ namespace MetaFeedConsole {
 
         }
 
-        static void ConsoleWrite(string Text, ConsoleColor ForegroundColor)
+	    private static async Task GetItems(Blogger blogger, HttpClient client, ConcurrentBag<SyndicationItem> feedItems)
+	    {
+		    ConsoleWrite(String.Format((string) "Parsing / adding Items from \"{0}\" ",  blogger.name),
+			    ConsoleColor.White);
+
+		    try
+		    {
+			    // check feed type
+			    switch (blogger.feedtype.ToLower())
+			    {
+				    case "rss":
+
+					    // parse Rss feed
+					    var rssSerializer = new Rss20FeedFormatter();
+					    WebResponse rssWebResponse;
+					    //HttpWebRequest rssWebRequest = (HttpWebRequest) System.Net.WebRequest.Create(blogger.blogfeedurl);
+					    //rssWebRequest.UserAgent = "DotNetGerman Bloggers";
+					    //rssWebResponse = rssWebRequest.GetResponse();
+
+					    var response = await client.GetAsync((string) blogger.blogfeedurl);
+					    var stream = await response.Content.ReadAsStreamAsync();
+
+
+					    StreamReader rssStreamReader = new StreamReader(stream, Encoding.UTF8);
+
+
+					    XmlReader rssReader = XmlReader.Create(rssStreamReader);
+					    rssSerializer.ReadFrom(rssReader);
+					    SyndicationFeed rssFeed = rssSerializer.Feed;
+					    foreach (SyndicationItem item in rssFeed.Items)
+					    {
+						    SyndicationItem newItem = new SyndicationItem();
+						    newItem.BaseUri = item.BaseUri;
+						    //newItem.Categories = item.Categories;
+
+						    newItem.Content = item.Content;
+						    //newItem.ElementExtensions = item.ElementExtensions;
+
+						    TextSyndicationContent copyright =
+							    new TextSyndicationContent(blogger.name);
+
+						    newItem.Copyright = copyright;
+
+						    newItem.Id = item.Id;
+						    newItem.LastUpdatedTime = item.LastUpdatedTime;
+						    //newItem.Links = item.Links;
+						    foreach (SyndicationLink link in item.Links)
+						    {
+							    newItem.Links.Add(link);
+						    }
+						    newItem.PublishDate = item.PublishDate;
+						    newItem.Summary = item.Summary;
+						    newItem.Title = item.Title;
+
+						    if (item.ElementExtensions.Count > 0)
+						    {
+							    XmlReader reader = item.ElementExtensions.GetReaderAtElementExtensions();
+							    while (reader.Read())
+							    {
+								    if ("content:encoded" == reader.Name)
+								    {
+									    SyndicationContent content =
+										    SyndicationContent.CreateHtmlContent(reader.ReadString());
+									    newItem.Content = content;
+								    }
+							    }
+						    }
+
+
+						    //assign author name explicitly because email is
+						    //used by default
+						    SyndicationPerson author = new SyndicationPerson();
+						    author.Name = blogger.name;
+						    newItem.Authors.Add(author);
+
+						    newItem.Contributors.Add(author);
+
+						    XmlDocument doc = new XmlDocument();
+						    string creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
+							    (object) blogger.name);
+						    doc.LoadXml(creator);
+						    SyndicationElementExtension insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
+
+						    newItem.ElementExtensions.Add(insertext);
+
+						    feedItems.Add(newItem);
+					    }
+					    break;
+
+
+				    case "atom":
+
+					    // parse Atom feed
+					    Atom10FeedFormatter atomSerializer = new Atom10FeedFormatter();
+					    WebResponse atomWebResponse;
+					    HttpWebRequest atomWebRequest = (HttpWebRequest) WebRequest.Create((string) blogger.blogfeedurl);
+					    atomWebRequest.UserAgent = "DotNetGerman Bloggers";
+					    atomWebResponse = atomWebRequest.GetResponse();
+
+					    StreamReader atomStreamReader = new StreamReader(atomWebResponse.GetResponseStream(), Encoding.UTF8);
+
+					    XmlReader atomReader = XmlReader.Create(atomStreamReader);
+					    atomSerializer.ReadFrom(atomReader);
+					    SyndicationFeed atomFeed = atomSerializer.Feed;
+
+					    foreach (SyndicationItem item in atomFeed.Items)
+					    {
+						    SyndicationItem newItem = new SyndicationItem();
+						    newItem.BaseUri = item.BaseUri;
+						    //newItem.Categories = item.Categories;
+
+						    newItem.Content = item.Content;
+						    //newItem.ElementExtensions = item.ElementExtensions;
+
+						    newItem.Id = item.Id;
+						    newItem.LastUpdatedTime = item.LastUpdatedTime;
+						    //newItem.Links = item.Links;
+						    foreach (SyndicationLink link in item.Links)
+						    {
+							    newItem.Links.Add(link);
+						    }
+						    newItem.PublishDate = item.PublishDate;
+						    newItem.Summary = item.Summary;
+						    newItem.Title = item.Title;
+
+						    TextSyndicationContent copyright =
+							    new TextSyndicationContent(blogger.name);
+
+						    newItem.Copyright = copyright;
+
+
+						    if (item.ElementExtensions.Count > 0)
+						    {
+							    XmlReader reader = item.ElementExtensions.GetReaderAtElementExtensions();
+							    while (reader.Read())
+							    {
+								    if ("content:encoded" == reader.Name)
+								    {
+									    SyndicationContent content =
+										    SyndicationContent.CreatePlaintextContent(reader.ReadString());
+									    newItem.Content = content;
+								    }
+							    }
+						    }
+
+
+						    // assign author name explicitly because email is
+						    // used by default
+						    SyndicationPerson author = new SyndicationPerson();
+						    author.Name = blogger.name;
+						    newItem.Authors.Add(author);
+
+						    newItem.Contributors.Add(author);
+
+						    XmlDocument doc = new XmlDocument();
+						    string creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
+							    (object) blogger.name);
+						    doc.LoadXml(creator);
+						    SyndicationElementExtension insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
+
+						    newItem.ElementExtensions.Add(insertext);
+
+						    feedItems.Add(newItem);
+					    }
+					    break;
+				    default:
+					    break;
+			    }
+			    ConsoleWriteLine("succeeded.", ConsoleColor.Green);
+		    }
+		    catch (Exception ex)
+		    {
+			    ConsoleWriteLine(string.Format("failed with exception {0}", ex.Message), ConsoleColor.Red);
+		    }
+	    }
+
+	    static void ConsoleWrite(string Text, ConsoleColor ForegroundColor)
         {
             ConsoleWrite(Text, ForegroundColor, ConsoleColor.Black, false, true);
         }
@@ -507,8 +552,15 @@ namespace MetaFeedConsole {
                 Console.Write(Text);
             }
             if (true == WriteToLog) {
-                Logger.Write(Text);
+                // Logger.Write(Text);
             }
         }
     }
+
+	 class Blogger {
+		 public string name { get; set; }
+		 public string blogurl { get; set; }
+		 public string blogfeedurl { get; set; }
+		 public string feedtype { get; set; }
+	 }
 }
