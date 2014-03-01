@@ -40,16 +40,16 @@ namespace MetaFeedConsole {
                 // read Application Settings
                 ConsoleWrite("Reading application configuration ", ConsoleColor.White);
 
-                string inputBlogFilePath = string.Empty;
-                string outputRssFeedFilePath = string.Empty;
-                string outputAtomFeedFilePath = string.Empty;
-                string outputFeedTitle = string.Empty;
-                string outputFeedLink = string.Empty;
-                string outputFeedDescription = string.Empty;
-                string outputFeedCopyright = string.Empty;
-                string outputFeedGenerator = string.Empty;
-                string outputFeedImageUrl = string.Empty;
-                int outputItemsNumber = 0;
+                var inputBlogFilePath = string.Empty;
+                var outputRssFeedFilePath = string.Empty;
+                var outputAtomFeedFilePath = string.Empty;
+                var outputFeedTitle = string.Empty;
+                var outputFeedLink = string.Empty;
+                var outputFeedDescription = string.Empty;
+                var outputFeedCopyright = string.Empty;
+                var outputFeedGenerator = string.Empty;
+                var outputFeedImageUrl = string.Empty;
+                var outputItemsNumber = 0;
 
 
                 if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["InputBlogFilePath"])) {
@@ -142,7 +142,7 @@ namespace MetaFeedConsole {
                 // load xml with all bloggers
                 ConsoleWrite(string.Format("Reading {0} ", inputBlogFilePath), ConsoleColor.White);
 
-                XDocument xml = XDocument.Load(inputBlogFilePath);
+                var xml = XDocument.Load(inputBlogFilePath);
 
                 ConsoleWriteLine("succeeded.", ConsoleColor.Green);
 
@@ -162,7 +162,7 @@ namespace MetaFeedConsole {
 
 	            
 	            try {
-                    int test = bloggers.Count();
+                    var test = bloggers.Count();
                     ConsoleWriteLine("succeeded", ConsoleColor.Green);
                 }
                 catch (Exception ex) {
@@ -205,7 +205,7 @@ namespace MetaFeedConsole {
                 ConsoleWriteLine("succeeded.", ConsoleColor.Green);
 
                 // create List for items being added to the final meta feed
-                List<SyndicationItem> metaFeedItems = new List<SyndicationItem>();
+                var metaFeedItems = new List<SyndicationItem>();
 
                 // get the configured number of items
                 if (feedItems.Count >= outputItemsNumber) {
@@ -220,44 +220,9 @@ namespace MetaFeedConsole {
                 ConsoleWriteLine("succeeded.", ConsoleColor.Green);
 
 
-                //foreach (SyndicationItem item in metaFeedItems) {
-                //    SyndicationElementExtension delext = null;
-                //    XmlDocument doc = new XmlDocument();
-                //    string author = string.Format("<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>", item.Authors[0].Name);
-                //    doc.LoadXml(author);
-                //    SyndicationElementExtension insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
-                //    bool foundcreator = false;
-                //    foreach (SyndicationElementExtension ext in item.ElementExtensions) {
-                //        if (false == foundcreator) {
-                //            XmlReader reader = ext.GetReader();
-                //            while (reader.Read()) {
-                //                if (("creator" == reader.LocalName) && ("dc" == reader.Prefix)) {
-                //                    delext = ext;
-                //                    foundcreator = true;
-                //                }
-
-                //            }
-                //            if (foundcreator == true) {
-                //                break;
-                //            }
-                //        }
-                //    }
-                //    if ((null != delext) && (true == foundcreator)) {
-
-                //        item.ElementExtensions.Remove(delext);
-                //    }
-                //    item.ElementExtensions.Add(insertext);
-                //    //}
-
-
-
-                //}
-
-
-                // create meta feed with the selected items
-
+               
                 ConsoleWrite("Instantiating meta feed ", ConsoleColor.White);
-                SyndicationFeed metaFeed = new SyndicationFeed(metaFeedItems);
+                var metaFeed = new SyndicationFeed(metaFeedItems);
                 ConsoleWriteLine("succeeded.", ConsoleColor.Green);
 
 
@@ -298,17 +263,17 @@ namespace MetaFeedConsole {
                 //metaFeed.ImageUrl = new Uri(outputFeedImageUrl);
                 //ConsoleWriteLine("succeeded.", ConsoleColor.Green);
 
-                XmlWriterSettings settings = new XmlWriterSettings();
+                var settings = new XmlWriterSettings();
                 settings.Encoding = new UTF8Encoding();
                 settings.Indent = true;
-                using (XmlWriter writer = XmlWriter.Create(outputRssFeedFilePath, settings)) {
+                using (var writer = XmlWriter.Create(outputRssFeedFilePath, settings)) {
                     ConsoleWrite(string.Format("Writing RSS meta feed to \"{0}\" ", outputRssFeedFilePath), ConsoleColor.White);
                     metaFeed.SaveAsRss20(writer);
                     ConsoleWriteLine("succeeded.", ConsoleColor.Green);
 
                 }
 
-                using (XmlWriter writer = XmlWriter.Create(outputAtomFeedFilePath, settings)) {
+                using (var writer = XmlWriter.Create(outputAtomFeedFilePath, settings)) {
                     ConsoleWrite(string.Format("Writing ATOM meta feed to \"{0}\" ", outputAtomFeedFilePath), ConsoleColor.White);
                     metaFeed.SaveAsAtom10(writer);
                     ConsoleWriteLine("succeeded.", ConsoleColor.Green);
@@ -358,22 +323,22 @@ namespace MetaFeedConsole {
 					    var stream = await response.Content.ReadAsStreamAsync();
 
 
-					    StreamReader rssStreamReader = new StreamReader(stream, Encoding.UTF8);
+					    var rssStreamReader = new StreamReader(stream, Encoding.UTF8);
 
 
-					    XmlReader rssReader = XmlReader.Create(rssStreamReader);
+					    var rssReader = XmlReader.Create(rssStreamReader);
 					    rssSerializer.ReadFrom(rssReader);
-					    SyndicationFeed rssFeed = rssSerializer.Feed;
-					    foreach (SyndicationItem item in rssFeed.Items)
+					    var rssFeed = rssSerializer.Feed;
+					    foreach (var item in rssFeed.Items)
 					    {
-						    SyndicationItem newItem = new SyndicationItem();
+						    var newItem = new SyndicationItem();
 						    newItem.BaseUri = item.BaseUri;
 						    //newItem.Categories = item.Categories;
 
 						    newItem.Content = item.Content;
 						    //newItem.ElementExtensions = item.ElementExtensions;
 
-						    TextSyndicationContent copyright =
+						    var copyright =
 							    new TextSyndicationContent(blogger.name);
 
 						    newItem.Copyright = copyright;
@@ -381,7 +346,7 @@ namespace MetaFeedConsole {
 						    newItem.Id = item.Id;
 						    newItem.LastUpdatedTime = item.LastUpdatedTime;
 						    //newItem.Links = item.Links;
-						    foreach (SyndicationLink link in item.Links)
+						    foreach (var link in item.Links)
 						    {
 							    newItem.Links.Add(link);
 						    }
@@ -391,7 +356,7 @@ namespace MetaFeedConsole {
 
 						    if (item.ElementExtensions.Count > 0)
 						    {
-							    XmlReader reader = item.ElementExtensions.GetReaderAtElementExtensions();
+							    var reader = item.ElementExtensions.GetReaderAtElementExtensions();
 							    while (reader.Read())
 							    {
 								    if ("content:encoded" == reader.Name)
@@ -406,17 +371,17 @@ namespace MetaFeedConsole {
 
 						    //assign author name explicitly because email is
 						    //used by default
-						    SyndicationPerson author = new SyndicationPerson();
+						    var author = new SyndicationPerson();
 						    author.Name = blogger.name;
 						    newItem.Authors.Add(author);
 
 						    newItem.Contributors.Add(author);
 
-						    XmlDocument doc = new XmlDocument();
-						    string creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
+						    var doc = new XmlDocument();
+						    var creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
 							    (object) blogger.name);
 						    doc.LoadXml(creator);
-						    SyndicationElementExtension insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
+						    var insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
 
 						    newItem.ElementExtensions.Add(insertext);
 
@@ -428,21 +393,21 @@ namespace MetaFeedConsole {
 				    case "atom":
 
 					    // parse Atom feed
-					    Atom10FeedFormatter atomSerializer = new Atom10FeedFormatter();
+					    var atomSerializer = new Atom10FeedFormatter();
 					    WebResponse atomWebResponse;
-					    HttpWebRequest atomWebRequest = (HttpWebRequest) WebRequest.Create((string) blogger.blogfeedurl);
+					    var atomWebRequest = (HttpWebRequest) WebRequest.Create((string) blogger.blogfeedurl);
 					    atomWebRequest.UserAgent = "DotNetGerman Bloggers";
 					    atomWebResponse = atomWebRequest.GetResponse();
 
-					    StreamReader atomStreamReader = new StreamReader(atomWebResponse.GetResponseStream(), Encoding.UTF8);
+					    var atomStreamReader = new StreamReader(atomWebResponse.GetResponseStream(), Encoding.UTF8);
 
-					    XmlReader atomReader = XmlReader.Create(atomStreamReader);
+					    var atomReader = XmlReader.Create(atomStreamReader);
 					    atomSerializer.ReadFrom(atomReader);
-					    SyndicationFeed atomFeed = atomSerializer.Feed;
+					    var atomFeed = atomSerializer.Feed;
 
-					    foreach (SyndicationItem item in atomFeed.Items)
+					    foreach (var item in atomFeed.Items)
 					    {
-						    SyndicationItem newItem = new SyndicationItem();
+						    var newItem = new SyndicationItem();
 						    newItem.BaseUri = item.BaseUri;
 						    //newItem.Categories = item.Categories;
 
@@ -452,7 +417,7 @@ namespace MetaFeedConsole {
 						    newItem.Id = item.Id;
 						    newItem.LastUpdatedTime = item.LastUpdatedTime;
 						    //newItem.Links = item.Links;
-						    foreach (SyndicationLink link in item.Links)
+						    foreach (var link in item.Links)
 						    {
 							    newItem.Links.Add(link);
 						    }
@@ -460,7 +425,7 @@ namespace MetaFeedConsole {
 						    newItem.Summary = item.Summary;
 						    newItem.Title = item.Title;
 
-						    TextSyndicationContent copyright =
+						    var copyright =
 							    new TextSyndicationContent(blogger.name);
 
 						    newItem.Copyright = copyright;
@@ -468,7 +433,7 @@ namespace MetaFeedConsole {
 
 						    if (item.ElementExtensions.Count > 0)
 						    {
-							    XmlReader reader = item.ElementExtensions.GetReaderAtElementExtensions();
+							    var reader = item.ElementExtensions.GetReaderAtElementExtensions();
 							    while (reader.Read())
 							    {
 								    if ("content:encoded" == reader.Name)
@@ -483,17 +448,17 @@ namespace MetaFeedConsole {
 
 						    // assign author name explicitly because email is
 						    // used by default
-						    SyndicationPerson author = new SyndicationPerson();
+						    var author = new SyndicationPerson();
 						    author.Name = blogger.name;
 						    newItem.Authors.Add(author);
 
 						    newItem.Contributors.Add(author);
 
-						    XmlDocument doc = new XmlDocument();
-						    string creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
+						    var doc = new XmlDocument();
+						    var creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
 							    (object) blogger.name);
 						    doc.LoadXml(creator);
-						    SyndicationElementExtension insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
+						    var insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
 
 						    newItem.ElementExtensions.Add(insertext);
 
