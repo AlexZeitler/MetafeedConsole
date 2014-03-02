@@ -3,530 +3,424 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Syndication;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-using Microsoft.Practices.EnterpriseLibrary.Logging;
+using MetaFeedConsole.Properties;
 
 
 namespace MetaFeedConsole {
-    class Program {
-
-		static void Main()
-		{
+	internal class Program {
+		private static void Main() {
 			var watch = new Stopwatch();
 			watch.Start();
-			MainAsync().Wait();
+			try {
+				MainAsync().Wait();
+			}
+			catch (Exception e) {
+				//Console.WriteLine(e);
+			}
 			watch.Stop();
-			ConsoleWrite(watch.Elapsed.TotalSeconds.ToString(), ConsoleColor.Red);
+			string.Format("Parsed all feeds in {0}s.", watch.Elapsed.TotalSeconds.ToString(CultureInfo.InvariantCulture))
+				.ConsoleWrite(ConsoleColor.White);
 			Console.ReadLine();
 		}
 
-        static async Task MainAsync()
-        {
-            try {
+		private static async Task MainAsync() {
+			try {
 				//// Logger.Write(new string("-".ToCharArray()[0], 80));
 
-                ConsoleWriteLine("DotNetGermanBloggers Meta Feed Console", ConsoleColor.Yellow, false);
-                Console.WriteLine();
+				"DotNetGermanBloggers Meta Feed Console".ConsoleWriteLine(ConsoleColor.Yellow, false);
+				Console.WriteLine();
 
-                // read Application Settings
-                ConsoleWrite("Reading application configuration ", ConsoleColor.White);
+				// read Application Settings
+				"Reading application configuration ".ConsoleWrite(ConsoleColor.White);
 
-                var inputBlogFilePath = string.Empty;
-                var outputRssFeedFilePath = string.Empty;
-                var outputAtomFeedFilePath = string.Empty;
-                var outputFeedTitle = string.Empty;
-                var outputFeedLink = string.Empty;
-                var outputFeedDescription = string.Empty;
-                var outputFeedCopyright = string.Empty;
-                var outputFeedGenerator = string.Empty;
-                var outputFeedImageUrl = string.Empty;
-                var outputItemsNumber = 0;
-
-
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["InputBlogFilePath"])) {
-                    throw new ConfigurationErrorsException("InputBlogFilePath is missing.");
-                }
-                else {
-                    inputBlogFilePath =
-                        ConfigurationSettings.AppSettings["InputBlogFilePath"];
-                }
-
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputRssFeedFilePath"])) {
-                    throw new ConfigurationErrorsException("OutputRssFeedFilePath is missing.");
-                }
-                else {
-                    outputRssFeedFilePath =
-                        ConfigurationSettings.AppSettings["OutputRssFeedFilePath"];
-                }
-
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputAtomFeedFilePath"])) {
-                    throw new ConfigurationErrorsException("OutputAtomFeedFilePath is missing.");
-                }
-                else {
-                    outputAtomFeedFilePath =
-                    ConfigurationSettings.AppSettings["OutputAtomFeedFilePath"];
-                }
-
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedTitle"])) {
-                    throw new ConfigurationErrorsException("OutputFeedTitle is missing.");
-                }
-                else {
-                    outputFeedTitle = ConfigurationSettings.AppSettings["OutputFeedTitle"];
-                }
+				var inputBlogFilePath = Settings.Default.InputBlogFilePath;
+				var outputRssFeedFilePath = Settings.Default.OutputRssFeedFilePath;
+				var outputAtomFeedFilePath = Settings.Default.OutputAtomFeedFilePath;
+				string outputFeedTitle;
+				string outputFeedLink;
+				string outputFeedDescription;
+				string outputFeedCopyright;
+				string outputFeedGenerator;
+				int outputItemsNumber;
 
 
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedLink"])) {
-                    throw new ConfigurationErrorsException("OutputFeedLink is missing.");
-                }
-                else {
-                    outputFeedLink = ConfigurationSettings.AppSettings["OutputFeedLink"];
-                }
+				if (string.IsNullOrEmpty(inputBlogFilePath)) {
+					throw new ConfigurationErrorsException("InputBlogFilePath is missing.");
+				}
 
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedDescription"])) {
-                    throw new ConfigurationErrorsException("OutputFeedDescription is missing.");
-                }
-                else {
-                    outputFeedDescription = ConfigurationSettings.AppSettings["OutputFeedDescription"];
-                }
+				if (string.IsNullOrEmpty(outputRssFeedFilePath)) {
+					throw new ConfigurationErrorsException("OutputRssFeedFilePath is missing.");
+				}
 
+				if (string.IsNullOrEmpty(outputAtomFeedFilePath)) {
+					throw new ConfigurationErrorsException("OutputAtomFeedFilePath is missing.");
+				}
 
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedCopyright"])) {
-                    throw new ConfigurationErrorsException("OutputFeedCopyright is missing");
-                }
-                else {
-                    outputFeedCopyright = ConfigurationSettings.AppSettings["OutputFeedCopyright"];
-                }
-
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedGenerator"])) {
-                    throw new ConfigurationErrorsException("OutputFeedGenerator is missing.");
-                }
-                else {
-                    outputFeedGenerator = ConfigurationSettings.AppSettings["OutputFeedGenerator"];
-                }
-
-                if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedImageUrl"])) {
-                    throw new ConfigurationErrorsException("OutputFeedImageUrl is missing.");
-                }
-                else {
-                    outputFeedImageUrl = ConfigurationSettings.AppSettings["OutputFeedImageUrl"];
-                }
+				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedTitle"])) {
+					throw new ConfigurationErrorsException("OutputFeedTitle is missing.");
+				}
+				else {
+					outputFeedTitle = ConfigurationSettings.AppSettings["OutputFeedTitle"];
+				}
 
 
-                if (string.IsNullOrEmpty(
-                    ConfigurationSettings.AppSettings["OutputItemsNumber"])) {
-                    throw new ConfigurationErrorsException("OutputItemsNumber is missing.");
-                }
-                else {
-                    if (!(int.TryParse(ConfigurationSettings.AppSettings["OutputItemsNumber"], out outputItemsNumber))) {
-                        throw new ConfigurationErrorsException("OutputItemsNumber has an invalid format. Int32 expected.");
-                    }
-                }
+				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedLink"])) {
+					throw new ConfigurationErrorsException("OutputFeedLink is missing.");
+				}
+				else {
+					outputFeedLink = ConfigurationSettings.AppSettings["OutputFeedLink"];
+				}
+
+				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedDescription"])) {
+					throw new ConfigurationErrorsException("OutputFeedDescription is missing.");
+				}
+				else {
+					outputFeedDescription = ConfigurationSettings.AppSettings["OutputFeedDescription"];
+				}
 
 
+				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedCopyright"])) {
+					throw new ConfigurationErrorsException("OutputFeedCopyright is missing");
+				}
+				else {
+					outputFeedCopyright = ConfigurationSettings.AppSettings["OutputFeedCopyright"];
+				}
+
+				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedGenerator"])) {
+					throw new ConfigurationErrorsException("OutputFeedGenerator is missing.");
+				}
+				else {
+					outputFeedGenerator = ConfigurationSettings.AppSettings["OutputFeedGenerator"];
+				}
+
+				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedImageUrl"])) {
+					throw new ConfigurationErrorsException("OutputFeedImageUrl is missing.");
+				}
+				else {
+				}
 
 
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-                // create List for all items 
-                var feedItems = new ConcurrentBag<SyndicationItem>();
-
-                // load xml with all bloggers
-                ConsoleWrite(string.Format("Reading {0} ", inputBlogFilePath), ConsoleColor.White);
-
-                var xml = XDocument.Load(inputBlogFilePath);
-
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-                // select all bloggers from xml
-                ConsoleWrite("Selecting Bloggers ", ConsoleColor.White);
-
-                var bloggers = (from b in xml.Descendants("blogger")
-	                orderby b.Element("name").Value ascending
-	                select new Blogger
-	                {
-		                name = b.Element("name").Value,
-		                blogurl = b.Element("blogurl").Value,
-		                blogfeedurl = b.Element("blogfeedurl").Value,
-		                feedtype = b.Element("feedtype").Value
-	                }).ToList();
+				if (string.IsNullOrEmpty(
+					ConfigurationSettings.AppSettings["OutputItemsNumber"])) {
+					throw new ConfigurationErrorsException("OutputItemsNumber is missing.");
+				}
+				else {
+					if (!(int.TryParse(ConfigurationSettings.AppSettings["OutputItemsNumber"], out outputItemsNumber))) {
+						throw new ConfigurationErrorsException("OutputItemsNumber has an invalid format. Int32 expected.");
+					}
+				}
 
 
-	            
-	            try {
-                    var test = bloggers.Count();
-                    ConsoleWriteLine("succeeded", ConsoleColor.Green);
-                }
-                catch (Exception ex) {
-                    if (ex.GetType() == typeof(NullReferenceException)) {
-                        throw new ConfigurationErrorsException(string.Format("{0} schema invalid.", inputBlogFilePath));
-                    }
-                }
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
-                // iterate through bloggers
+				// create List for all items 
+				var feedItems = new ConcurrentBag<SyndicationItem>();
 
-	            var client = new HttpClient();
+				// load xml with all bloggers
+				string.Format("Reading {0} ", inputBlogFilePath).ConsoleWrite(ConsoleColor.White);
 
-	            var tasks = bloggers.Select(async item =>
-	            {
-		            // some pre stuff
-		            await GetItems(item, client, feedItems);
+				var xml = XDocument.Load(inputBlogFilePath);
 
-		            // some post stuff
-	            });
-	            await Task.WhenAll(tasks);
-				
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
-				//foreach (var blogger in bloggers)
-				//{
-				//	await GetItems(blogger, client, feedItems);
-				//}
+				// select all bloggers from xml
+				"Selecting Bloggers ".ConsoleWrite(ConsoleColor.White);
+
+				var bloggers = (from b in xml.Descendants("blogger")
+					orderby b.Element("name").Value
+					select new Blogger {
+						Name = b.Element("name").Value,
+						BlogUrl = b.Element("blogurl").Value,
+						BlogfeedUrl = b.Element("blogfeedurl").Value,
+						FeedType = b.Element("feedtype").Value
+					}).ToList();
 
 
-	            // sort items by date descending
+				try {
+					var test = bloggers.Count();
+					"succeeded".ConsoleWriteLine(ConsoleColor.Green);
+				}
+				catch (NullReferenceException ex) {
+					throw new ConfigurationErrorsException(string.Format("{0} schema invalid.", inputBlogFilePath));
+				}
 
-                ConsoleWrite("Sorting items ", ConsoleColor.White);
 
-	            var feedItemsList = feedItems.ToList();
+				var client = new HttpClient();
+
+				// read all blogs
+				var blogsRead = bloggers.Select(async blogger => {
+					var items = await GetFeedItemsForBlogger(blogger, client);
+					items.ForEach(feedItems.Add);
+				});
+				await Task.WhenAll(blogsRead);
+
+				var feedItemsList = feedItems.ToList();
+
+				// sort items by date descending
+				"Sorting items ".ConsoleWrite(ConsoleColor.White);
 
 				feedItemsList.Sort(
-                    delegate(SyndicationItem x, SyndicationItem y) {
-                        return DateTime.Compare(y.PublishDate.DateTime, x.PublishDate.DateTime);
-                    });
+					(x, y) => DateTime.Compare(y.PublishDate.DateTime, x.PublishDate.DateTime));
 
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
-                // create List for items being added to the final meta feed
-                var metaFeedItems = new List<SyndicationItem>();
+				// create List for items being added to the final meta feed
+				List<SyndicationItem> metaFeedItems;
 
-                // get the configured number of items
-                if (feedItems.Count >= outputItemsNumber) {
-                    ConsoleWrite(string.Format("Selecting {0} items ", outputItemsNumber), ConsoleColor.White);
+				// get the configured number of items
+				if (feedItems.Count >= outputItemsNumber) {
+					string.Format("Selecting {0} items ", outputItemsNumber).ConsoleWrite(ConsoleColor.White);
 					metaFeedItems = feedItemsList.GetRange(0, outputItemsNumber);
-                }
-                else {
-                    ConsoleWrite(string.Format("Selecting {0} items ", feedItems.Count), ConsoleColor.White);
+				}
+				else {
+					string.Format("Selecting {0} items ", feedItems.Count).ConsoleWrite(ConsoleColor.White);
 					metaFeedItems = feedItemsList;
-                }
-
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-
-               
-                ConsoleWrite("Instantiating meta feed ", ConsoleColor.White);
-                var metaFeed = new SyndicationFeed(metaFeedItems);
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-
-                // set meta feed title
-                ConsoleWrite(string.Format("Setting meta feed title to \"{0}\" ", outputFeedTitle), ConsoleColor.White);
-                metaFeed.Title =
-                    new TextSyndicationContent(outputFeedTitle, TextSyndicationContentKind.Plaintext);
-                ConsoleWriteLine(" succeeded.", ConsoleColor.Green);
-
-                //  set meta feed link
-                ConsoleWrite(string.Format("Setting meta feed link to \"{0}\" ", outputFeedLink), ConsoleColor.White);
-                metaFeed.Links.Add(new SyndicationLink(new Uri(outputFeedLink)));
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-
-                // set meta feed description
-                ConsoleWrite(string.Format("Setting meta feed description to \"{0}\" ", outputFeedDescription), ConsoleColor.White);
-                metaFeed.Description = new TextSyndicationContent(outputFeedDescription,
-                    TextSyndicationContentKind.Plaintext);
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-
-                // set meta feed copyright
-                ConsoleWrite(string.Format("Setting meta feed copyright to \"{0}\" ", outputFeedCopyright), ConsoleColor.White);
-                metaFeed.Copyright = new TextSyndicationContent(outputFeedCopyright,
-                    TextSyndicationContentKind.Plaintext);
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-
-                // set meta feed generator
-                ConsoleWrite(string.Format("Setting meta feed generator to \"{0}\" ", outputFeedGenerator), ConsoleColor.White);
-                metaFeed.Generator = outputFeedGenerator;
-                ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-
-                // set meta feed image url
-                //ConsoleWrite(string.Format("Setting meta feed image url to \"{0}\" ", outputFeedImageUrl), ConsoleColor.White);
-                //metaFeed.ImageUrl = new Uri(outputFeedImageUrl);
-                //ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-                var settings = new XmlWriterSettings();
-                settings.Encoding = new UTF8Encoding();
-                settings.Indent = true;
-                using (var writer = XmlWriter.Create(outputRssFeedFilePath, settings)) {
-                    ConsoleWrite(string.Format("Writing RSS meta feed to \"{0}\" ", outputRssFeedFilePath), ConsoleColor.White);
-                    metaFeed.SaveAsRss20(writer);
-                    ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-                }
-
-                using (var writer = XmlWriter.Create(outputAtomFeedFilePath, settings)) {
-                    ConsoleWrite(string.Format("Writing ATOM meta feed to \"{0}\" ", outputAtomFeedFilePath), ConsoleColor.White);
-                    metaFeed.SaveAsAtom10(writer);
-                    ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-
-                }
-
-                ConsoleWriteLine("completed", ConsoleColor.Green);
-                // Logger.Write(new string("-".ToCharArray()[0], 80));
-                ConsoleWriteLine(string.Empty, ConsoleColor.Gray);
-            }
-            catch (Exception ex) {
-                ConsoleWriteLine("failed with exception:", ConsoleColor.Red);
-                if (null != ex.InnerException) {
-                    ConsoleWriteLine(ex.InnerException.ToString(), ConsoleColor.Red);
-                    ConsoleWriteLine(ex.Message, ConsoleColor.Red);
-                }
-                else {
-                    ConsoleWriteLine(ex.Message, ConsoleColor.Red);
-                }
-            }
-            finally {
-            }
-            //Console.ReadLine();
-
-        }
-
-	    private static async Task GetItems(Blogger blogger, HttpClient client, ConcurrentBag<SyndicationItem> feedItems)
-	    {
-		    ConsoleWrite(String.Format((string) "Parsing / adding Items from \"{0}\" ",  blogger.name),
-			    ConsoleColor.White);
-
-		    try
-		    {
-			    // check feed type
-			    switch (blogger.feedtype.ToLower())
-			    {
-				    case "rss":
-
-					    // parse Rss feed
-					    var rssSerializer = new Rss20FeedFormatter();
-					    WebResponse rssWebResponse;
-					    //HttpWebRequest rssWebRequest = (HttpWebRequest) System.Net.WebRequest.Create(blogger.blogfeedurl);
-					    //rssWebRequest.UserAgent = "DotNetGerman Bloggers";
-					    //rssWebResponse = rssWebRequest.GetResponse();
-
-					    var response = await client.GetAsync((string) blogger.blogfeedurl);
-					    var stream = await response.Content.ReadAsStreamAsync();
-
-
-					    var rssStreamReader = new StreamReader(stream, Encoding.UTF8);
-
-
-					    var rssReader = XmlReader.Create(rssStreamReader);
-					    rssSerializer.ReadFrom(rssReader);
-					    var rssFeed = rssSerializer.Feed;
-					    foreach (var item in rssFeed.Items)
-					    {
-						    var newItem = new SyndicationItem();
-						    newItem.BaseUri = item.BaseUri;
-						    //newItem.Categories = item.Categories;
-
-						    newItem.Content = item.Content;
-						    //newItem.ElementExtensions = item.ElementExtensions;
-
-						    var copyright =
-							    new TextSyndicationContent(blogger.name);
-
-						    newItem.Copyright = copyright;
-
-						    newItem.Id = item.Id;
-						    newItem.LastUpdatedTime = item.LastUpdatedTime;
-						    //newItem.Links = item.Links;
-						    foreach (var link in item.Links)
-						    {
-							    newItem.Links.Add(link);
-						    }
-						    newItem.PublishDate = item.PublishDate;
-						    newItem.Summary = item.Summary;
-						    newItem.Title = item.Title;
-
-						    if (item.ElementExtensions.Count > 0)
-						    {
-							    var reader = item.ElementExtensions.GetReaderAtElementExtensions();
-							    while (reader.Read())
-							    {
-								    if ("content:encoded" == reader.Name)
-								    {
-									    SyndicationContent content =
-										    SyndicationContent.CreateHtmlContent(reader.ReadString());
-									    newItem.Content = content;
-								    }
-							    }
-						    }
-
-
-						    //assign author name explicitly because email is
-						    //used by default
-						    var author = new SyndicationPerson();
-						    author.Name = blogger.name;
-						    newItem.Authors.Add(author);
-
-						    newItem.Contributors.Add(author);
-
-						    var doc = new XmlDocument();
-						    var creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
-							    (object) blogger.name);
-						    doc.LoadXml(creator);
-						    var insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
-
-						    newItem.ElementExtensions.Add(insertext);
-
-						    feedItems.Add(newItem);
-					    }
-					    break;
-
-
-				    case "atom":
-
-					    // parse Atom feed
-					    var atomSerializer = new Atom10FeedFormatter();
-					    WebResponse atomWebResponse;
-					    var atomWebRequest = (HttpWebRequest) WebRequest.Create((string) blogger.blogfeedurl);
-					    atomWebRequest.UserAgent = "DotNetGerman Bloggers";
-					    atomWebResponse = atomWebRequest.GetResponse();
-
-					    var atomStreamReader = new StreamReader(atomWebResponse.GetResponseStream(), Encoding.UTF8);
-
-					    var atomReader = XmlReader.Create(atomStreamReader);
-					    atomSerializer.ReadFrom(atomReader);
-					    var atomFeed = atomSerializer.Feed;
-
-					    foreach (var item in atomFeed.Items)
-					    {
-						    var newItem = new SyndicationItem();
-						    newItem.BaseUri = item.BaseUri;
-						    //newItem.Categories = item.Categories;
-
-						    newItem.Content = item.Content;
-						    //newItem.ElementExtensions = item.ElementExtensions;
-
-						    newItem.Id = item.Id;
-						    newItem.LastUpdatedTime = item.LastUpdatedTime;
-						    //newItem.Links = item.Links;
-						    foreach (var link in item.Links)
-						    {
-							    newItem.Links.Add(link);
-						    }
-						    newItem.PublishDate = item.PublishDate;
-						    newItem.Summary = item.Summary;
-						    newItem.Title = item.Title;
-
-						    var copyright =
-							    new TextSyndicationContent(blogger.name);
-
-						    newItem.Copyright = copyright;
-
-
-						    if (item.ElementExtensions.Count > 0)
-						    {
-							    var reader = item.ElementExtensions.GetReaderAtElementExtensions();
-							    while (reader.Read())
-							    {
-								    if ("content:encoded" == reader.Name)
-								    {
-									    SyndicationContent content =
-										    SyndicationContent.CreatePlaintextContent(reader.ReadString());
-									    newItem.Content = content;
-								    }
-							    }
-						    }
-
-
-						    // assign author name explicitly because email is
-						    // used by default
-						    var author = new SyndicationPerson();
-						    author.Name = blogger.name;
-						    newItem.Authors.Add(author);
-
-						    newItem.Contributors.Add(author);
-
-						    var doc = new XmlDocument();
-						    var creator = String.Format((string) "<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
-							    (object) blogger.name);
-						    doc.LoadXml(creator);
-						    var insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
-
-						    newItem.ElementExtensions.Add(insertext);
-
-						    feedItems.Add(newItem);
-					    }
-					    break;
-				    default:
-					    break;
-			    }
-			    ConsoleWriteLine("succeeded.", ConsoleColor.Green);
-		    }
-		    catch (Exception ex)
-		    {
-			    ConsoleWriteLine(string.Format("failed with exception {0}", ex.Message), ConsoleColor.Red);
-		    }
-	    }
-
-	    static void ConsoleWrite(string Text, ConsoleColor ForegroundColor)
-        {
-            ConsoleWrite(Text, ForegroundColor, ConsoleColor.Black, false, true);
-        }
-
-        static void ConsoleWrite(string Text, ConsoleColor ForegroundColor, bool WriteToLog)
-        {
-            ConsoleWrite(Text, ForegroundColor, ConsoleColor.Black, false, WriteToLog);
-        }
-
-        static void ConsoleWrite(string Text, ConsoleColor ForegroundColor, ConsoleColor BackgroundColor, bool WriteToLog)
-        {
-            ConsoleWrite(Text, ForegroundColor, BackgroundColor, false, WriteToLog);
-        }
-
-        static void ConsoleWriteLine(string Text, ConsoleColor ForegroundColor, ConsoleColor BackgroundColor, bool WriteToLog)
-        {
-            ConsoleWrite(Text, ForegroundColor, BackgroundColor, true, WriteToLog);
-        }
-
-        static void ConsoleWriteLine(string Text, ConsoleColor ForegroundColor, bool WriteToLog)
-        {
-            ConsoleWrite(Text, ForegroundColor, ConsoleColor.Black, true, WriteToLog);
-        }
-
-
-        static void ConsoleWriteLine(string Text, ConsoleColor ForegroundColor)
-        {
-            ConsoleWrite(Text, ForegroundColor, ConsoleColor.Black, true, true);
-        }
-
-        static void ConsoleWrite(string Text, ConsoleColor ForegroundColor, ConsoleColor BackgroundColor, bool WriteLine, bool WriteToLog)
-        {
-            Console.BackgroundColor = BackgroundColor;
-            Console.ForegroundColor = ForegroundColor;
-            if (true == WriteLine) {
-                Console.WriteLine(Text);
-            }
-            else {
-                Console.Write(Text);
-            }
-            if (true == WriteToLog) {
-                // Logger.Write(Text);
-            }
-        }
-    }
-
-	 class Blogger {
-		 public string name { get; set; }
-		 public string blogurl { get; set; }
-		 public string blogfeedurl { get; set; }
-		 public string feedtype { get; set; }
-	 }
+				}
+
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+
+
+				"Instantiating meta feed ".ConsoleWrite(ConsoleColor.White);
+				var metaFeed = new SyndicationFeed(metaFeedItems);
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+
+
+				// set meta feed title
+				string.Format("Setting meta feed title to \"{0}\" ", outputFeedTitle).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Title =
+					new TextSyndicationContent(outputFeedTitle, TextSyndicationContentKind.Plaintext);
+				" succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+
+				//  set meta feed link
+				string.Format("Setting meta feed link to \"{0}\" ", outputFeedLink).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Links.Add(new SyndicationLink(new Uri(outputFeedLink)));
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+
+
+				// set meta feed description
+				string.Format("Setting meta feed description to \"{0}\" ", outputFeedDescription).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Description = new TextSyndicationContent(outputFeedDescription,
+					TextSyndicationContentKind.Plaintext);
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+
+
+				// set meta feed copyright
+				string.Format("Setting meta feed copyright to \"{0}\" ", outputFeedCopyright).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Copyright = new TextSyndicationContent(outputFeedCopyright,
+					TextSyndicationContentKind.Plaintext);
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+
+
+				// set meta feed generator
+				string.Format("Setting meta feed generator to \"{0}\" ", outputFeedGenerator).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Generator = outputFeedGenerator;
+				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+
+				var settings = new XmlWriterSettings {Encoding = new UTF8Encoding(), Indent = true};
+				using (var writer = XmlWriter.Create(outputRssFeedFilePath, settings)) {
+					string.Format("Writing RSS meta feed to \"{0}\" ", outputRssFeedFilePath).ConsoleWrite(ConsoleColor.White);
+					metaFeed.SaveAsRss20(writer);
+					"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+				}
+
+				using (var writer = XmlWriter.Create(outputAtomFeedFilePath, settings)) {
+					string.Format("Writing ATOM meta feed to \"{0}\" ", outputAtomFeedFilePath).ConsoleWrite(ConsoleColor.White);
+					metaFeed.SaveAsAtom10(writer);
+					"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+				}
+
+				"completed".ConsoleWriteLine(ConsoleColor.Green);
+				string.Empty.ConsoleWriteLine(ConsoleColor.Gray);
+			}
+			catch (Exception ex) {
+				"failed with exception:".ConsoleWriteLine(ConsoleColor.Red);
+				if (null != ex.InnerException) {
+					ex.InnerException.ToString().ConsoleWriteLine(ConsoleColor.Red);
+					ex.Message.ConsoleWriteLine(ConsoleColor.Red);
+					// throw;
+				}
+				else {
+					ex.Message.ConsoleWriteLine(ConsoleColor.Red);
+					// throw;
+				}
+			}
+		}
+
+		private static async Task<List<SyndicationItem>> GetFeedItemsForBlogger(Blogger blogger, HttpClient client) {
+			var feedItems = new List<SyndicationItem>();
+			var timer = Stopwatch.StartNew();
+			String.Format("Parsing / adding Items from \"{0}\" ", blogger.Name).ConsoleWriteLine(ConsoleColor.White);
+
+			try {
+				// check feed type
+				switch (blogger.FeedType.ToLower()) {
+					case "rss":
+
+
+						var rssItems = await GetRssItemsForBlogger(blogger, client);
+						rssItems.ForEach(feedItems.Add);
+						break;
+
+
+					case "atom":
+						var atomItems = await GetAtomItemsForBlogger(blogger, client);
+						atomItems.ForEach(feedItems.Add);
+						break;
+					default:
+						break;
+				}
+				String.Format("Successfully parsed Items from \"{0}\" in {1}s. ", blogger.Name, timer.Elapsed.TotalSeconds)
+					.ConsoleWriteLine(ConsoleColor.Green);
+				return feedItems;
+			}
+			catch (Exception ex) {
+				timer.Stop();
+				String.Format("Failed Parsing / adding Items from \"{0}\"", blogger.Name).ConsoleWriteLine(ConsoleColor.White);
+				string.Format("With exception {0}", ex.Message).ConsoleWriteLine(ConsoleColor.Red);
+				return feedItems;
+				// throw;
+			}
+		}
+
+		private static async Task<List<SyndicationItem>> GetRssItemsForBlogger(Blogger blogger, HttpClient client) {
+			var rssItems = new List<SyndicationItem>();
+			// parse Rss feed
+			var response = await client.GetAsync(blogger.BlogfeedUrl);
+			var stream = await response.Content.ReadAsStreamAsync();
+
+
+			var rssStreamReader = new StreamReader(stream, Encoding.UTF8);
+
+
+			var rssReader = XmlReader.Create(rssStreamReader);
+			var rssSerializer = new Rss20FeedFormatter();
+			rssSerializer.ReadFrom(rssReader);
+			var rssFeed = rssSerializer.Feed;
+			foreach (var item in rssFeed.Items) {
+				var newItem = new SyndicationItem {BaseUri = item.BaseUri, Content = item.Content};
+
+				var copyright =
+					new TextSyndicationContent(blogger.Name);
+
+				newItem.Copyright = copyright;
+
+				newItem.Id = item.Id;
+				newItem.LastUpdatedTime = item.LastUpdatedTime;
+
+				foreach (var link in item.Links) {
+					newItem.Links.Add(link);
+				}
+				newItem.PublishDate = item.PublishDate;
+				newItem.Summary = item.Summary;
+				newItem.Title = item.Title;
+
+				if (item.ElementExtensions.Count > 0) {
+					var reader = item.ElementExtensions.GetReaderAtElementExtensions();
+					while (reader.Read()) {
+						if ("content:encoded" == reader.Name) {
+							SyndicationContent content =
+								SyndicationContent.CreateHtmlContent(reader.ReadString());
+							newItem.Content = content;
+						}
+					}
+				}
+
+
+				//assign author name explicitly because email is
+				//used by default
+				var author = new SyndicationPerson {Name = blogger.Name};
+				newItem.Authors.Add(author);
+
+				newItem.Contributors.Add(author);
+
+				var doc = new XmlDocument();
+				var creator = String.Format(
+					"<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
+					blogger.Name);
+				doc.LoadXml(creator);
+				var insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
+
+				newItem.ElementExtensions.Add(insertext);
+
+				rssItems.Add(newItem);
+			}
+			return rssItems;
+		}
+
+		private static async Task<List<SyndicationItem>> GetAtomItemsForBlogger(Blogger blogger, HttpClient client) {
+			var atomItems = new List<SyndicationItem>();
+// parse Atom feed
+			var atomResponse = await client.GetAsync(blogger.BlogfeedUrl);
+			var atomStream = await atomResponse.Content.ReadAsStreamAsync();
+
+			var atomStreamReader = new StreamReader(atomStream, Encoding.UTF8);
+
+			var atomReader = XmlReader.Create(atomStreamReader);
+			var atomSerializer = new Atom10FeedFormatter();
+			atomSerializer.ReadFrom(atomReader);
+			var atomFeed = atomSerializer.Feed;
+
+			foreach (var item in atomFeed.Items) {
+				var newItem = new SyndicationItem {
+					BaseUri = item.BaseUri,
+					Content = item.Content,
+					Id = item.Id,
+					LastUpdatedTime = item.LastUpdatedTime
+				};
+
+				foreach (var link in item.Links) {
+					newItem.Links.Add(link);
+				}
+				newItem.PublishDate = item.PublishDate;
+				newItem.Summary = item.Summary;
+				newItem.Title = item.Title;
+
+				var copyright =
+					new TextSyndicationContent(blogger.Name);
+
+				newItem.Copyright = copyright;
+
+
+				if (item.ElementExtensions.Count > 0) {
+					var reader = item.ElementExtensions.GetReaderAtElementExtensions();
+					while (reader.Read()) {
+						if ("content:encoded" == reader.Name) {
+							SyndicationContent content =
+								SyndicationContent.CreatePlaintextContent(reader.ReadString());
+							newItem.Content = content;
+						}
+					}
+				}
+
+
+				// assign author name explicitly because email is
+				// used by default
+				var author = new SyndicationPerson {Name = blogger.Name};
+				newItem.Authors.Add(author);
+
+				newItem.Contributors.Add(author);
+
+				var doc = new XmlDocument();
+				var creator = String.Format(
+					"<dc:creator xmlns:dc=\"http://purl.org/dc/elements/1.1/\">{0}</dc:creator>",
+					blogger.Name);
+				doc.LoadXml(creator);
+				var insertext = new SyndicationElementExtension(new XmlNodeReader(doc.DocumentElement));
+
+				newItem.ElementExtensions.Add(insertext);
+
+				atomItems.Add(newItem);
+			}
+			return atomItems;
+		}
+	}
 }

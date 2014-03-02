@@ -120,12 +120,12 @@
 		<feedtype>RSS</feedtype>
 	</blogger>
 
-	<blogger>
+	<!--<blogger>
 		<name>Christina Hirth </name>
 		<blogurl>http://www.yellow-brick-code.org/</blogurl>
 		<blogfeedurl>http://www.yellow-brick-code.org/?feed=rss2</blogfeedurl>
 		<feedtype>RSS</feedtype>
-	</blogger>
+	</blogger>-->
 
 	<blogger>
 		<name>Christoph Schmid</name>
