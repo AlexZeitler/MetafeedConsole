@@ -19,6 +19,16 @@ using Microsoft.Practices.EnterpriseLibrary.Logging;
 
 namespace MetaFeedConsole {
 	internal class Program {
+		private static string _inputBlogFilePath;
+		private static string _outputRssFeedFilePath;
+		private static string _outputAtomFeedFilePath;
+		private static string _outputFeedTitle;
+		private static string _outputFeedLink;
+		private static string _outputFeedDescription;
+		private static string _outputFeedCopyright;
+		private static string _outputFeedGenerator;
+		private static int _outputItemsNumber;
+
 		private static void Main() {
 			var configurationSource = ConfigurationSourceFactory.Create();
 			var logWriterFactory = new LogWriterFactory(configurationSource);
@@ -30,7 +40,7 @@ namespace MetaFeedConsole {
 				MainAsync().Wait();
 			}
 			catch (Exception e) {
-				//Console.WriteLine(e);
+				e.Message.ConsoleWrite(ConsoleColor.Red);
 			}
 			watch.Stop();
 			string.Format("Parsed all feeds in {0}s.", watch.Elapsed.TotalSeconds.ToString(CultureInfo.InvariantCulture))
@@ -45,61 +55,15 @@ namespace MetaFeedConsole {
 				"DotNetGermanBloggers Meta Feed Console".ConsoleWriteLine(ConsoleColor.Yellow, false);
 				Console.WriteLine();
 
-				// read Application Settings
-				"Reading application configuration ".ConsoleWrite(ConsoleColor.White);
-
-				var inputBlogFilePath = Settings.Default.InputBlogFilePath;
-				var outputRssFeedFilePath = Settings.Default.OutputRssFeedFilePath;
-				var outputAtomFeedFilePath = Settings.Default.OutputAtomFeedFilePath;
-				var outputFeedTitle = Settings.Default.OutputFeedTitle;
-				var outputFeedLink = Settings.Default.OutputFeedLink;
-				var outputFeedDescription = Settings.Default.OutputFeedDescription;
-				var outputFeedCopyright = Settings.Default.OutputFeedCopyright;
-				var outputFeedGenerator = Settings.Default.OutputFeedGenerator;
-				var outputItemsNumber = Settings.Default.OutputItemsNumber;
-
-
-				if (string.IsNullOrEmpty(inputBlogFilePath)) {
-					throw new ConfigurationErrorsException("InputBlogFilePath is missing.");
-				}
-
-				if (string.IsNullOrEmpty(outputRssFeedFilePath)) {
-					throw new ConfigurationErrorsException("OutputRssFeedFilePath is missing.");
-				}
-
-				if (string.IsNullOrEmpty(outputAtomFeedFilePath)) {
-					throw new ConfigurationErrorsException("OutputAtomFeedFilePath is missing.");
-				}
-
-				if (string.IsNullOrEmpty(outputFeedTitle)) {
-					throw new ConfigurationErrorsException("OutputFeedTitle is missing.");
-				}
-
-				if (string.IsNullOrEmpty(outputFeedLink)) {
-					throw new ConfigurationErrorsException("OutputFeedLink is missing.");
-				}
-
-				if (string.IsNullOrEmpty(outputFeedDescription)) {
-					throw new ConfigurationErrorsException("OutputFeedDescription is missing.");
-				}
-
-				if (string.IsNullOrEmpty(outputFeedCopyright)) {
-					throw new ConfigurationErrorsException("OutputFeedCopyright is missing");
-				}
-
-				if (string.IsNullOrEmpty(outputFeedGenerator)) {
-					throw new ConfigurationErrorsException("OutputFeedGenerator is missing.");
-				}
-
-				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
+				ValidateAppSettings();
 
 				// create List for all items 
 				var feedItems = new ConcurrentBag<SyndicationItem>();
 
 				// load xml with all bloggers
-				string.Format("Reading {0} ", inputBlogFilePath).ConsoleWrite(ConsoleColor.White);
+				string.Format("Reading {0} ", _inputBlogFilePath).ConsoleWrite(ConsoleColor.White);
 
-				var xml = XDocument.Load(inputBlogFilePath);
+				var xml = XDocument.Load(_inputBlogFilePath);
 
 				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
@@ -121,7 +85,7 @@ namespace MetaFeedConsole {
 					"succeeded".ConsoleWriteLine(ConsoleColor.Green);
 				}
 				catch (NullReferenceException ex) {
-					throw new ConfigurationErrorsException(string.Format("{0} schema invalid.", inputBlogFilePath));
+					throw new ConfigurationErrorsException(string.Format("{0} schema invalid.", _inputBlogFilePath));
 				}
 
 
@@ -148,9 +112,9 @@ namespace MetaFeedConsole {
 				List<SyndicationItem> metaFeedItems;
 
 				// get the configured number of items
-				if (feedItems.Count >= outputItemsNumber) {
-					string.Format("Selecting {0} items ", outputItemsNumber).ConsoleWrite(ConsoleColor.White);
-					metaFeedItems = feedItemsList.GetRange(0, outputItemsNumber);
+				if (feedItems.Count >= _outputItemsNumber) {
+					string.Format("Selecting {0} items ", _outputItemsNumber).ConsoleWrite(ConsoleColor.White);
+					metaFeedItems = feedItemsList.GetRange(0, _outputItemsNumber);
 				}
 				else {
 					string.Format("Selecting {0} items ", feedItems.Count).ConsoleWrite(ConsoleColor.White);
@@ -166,45 +130,45 @@ namespace MetaFeedConsole {
 
 
 				// set meta feed title
-				string.Format("Setting meta feed title to \"{0}\" ", outputFeedTitle).ConsoleWrite(ConsoleColor.White);
+				string.Format("Setting meta feed title to \"{0}\" ", _outputFeedTitle).ConsoleWrite(ConsoleColor.White);
 				metaFeed.Title =
-					new TextSyndicationContent(outputFeedTitle, TextSyndicationContentKind.Plaintext);
+					new TextSyndicationContent(_outputFeedTitle, TextSyndicationContentKind.Plaintext);
 				" succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
 				//  set meta feed link
-				string.Format("Setting meta feed link to \"{0}\" ", outputFeedLink).ConsoleWrite(ConsoleColor.White);
-				metaFeed.Links.Add(new SyndicationLink(new Uri(outputFeedLink)));
+				string.Format("Setting meta feed link to \"{0}\" ", _outputFeedLink).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Links.Add(new SyndicationLink(new Uri(_outputFeedLink)));
 				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
 
 				// set meta feed description
-				string.Format("Setting meta feed description to \"{0}\" ", outputFeedDescription).ConsoleWrite(ConsoleColor.White);
-				metaFeed.Description = new TextSyndicationContent(outputFeedDescription,
+				string.Format("Setting meta feed description to \"{0}\" ", _outputFeedDescription).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Description = new TextSyndicationContent(_outputFeedDescription,
 					TextSyndicationContentKind.Plaintext);
 				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
 
 				// set meta feed copyright
-				string.Format("Setting meta feed copyright to \"{0}\" ", outputFeedCopyright).ConsoleWrite(ConsoleColor.White);
-				metaFeed.Copyright = new TextSyndicationContent(outputFeedCopyright,
+				string.Format("Setting meta feed copyright to \"{0}\" ", _outputFeedCopyright).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Copyright = new TextSyndicationContent(_outputFeedCopyright,
 					TextSyndicationContentKind.Plaintext);
 				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
 
 				// set meta feed generator
-				string.Format("Setting meta feed generator to \"{0}\" ", outputFeedGenerator).ConsoleWrite(ConsoleColor.White);
-				metaFeed.Generator = outputFeedGenerator;
+				string.Format("Setting meta feed generator to \"{0}\" ", _outputFeedGenerator).ConsoleWrite(ConsoleColor.White);
+				metaFeed.Generator = _outputFeedGenerator;
 				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 
 				var settings = new XmlWriterSettings {Encoding = new UTF8Encoding(), Indent = true};
-				using (var writer = XmlWriter.Create(outputRssFeedFilePath, settings)) {
-					string.Format("Writing RSS meta feed to \"{0}\" ", outputRssFeedFilePath).ConsoleWrite(ConsoleColor.White);
+				using (var writer = XmlWriter.Create(_outputRssFeedFilePath, settings)) {
+					string.Format("Writing RSS meta feed to \"{0}\" ", _outputRssFeedFilePath).ConsoleWrite(ConsoleColor.White);
 					metaFeed.SaveAsRss20(writer);
 					"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 				}
 
-				using (var writer = XmlWriter.Create(outputAtomFeedFilePath, settings)) {
-					string.Format("Writing ATOM meta feed to \"{0}\" ", outputAtomFeedFilePath).ConsoleWrite(ConsoleColor.White);
+				using (var writer = XmlWriter.Create(_outputAtomFeedFilePath, settings)) {
+					string.Format("Writing ATOM meta feed to \"{0}\" ", _outputAtomFeedFilePath).ConsoleWrite(ConsoleColor.White);
 					metaFeed.SaveAsAtom10(writer);
 					"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 				}
@@ -224,6 +188,56 @@ namespace MetaFeedConsole {
 					// throw;
 				}
 			}
+		}
+
+		private static void ValidateAppSettings() {
+// read Application Settings
+			"Reading application configuration ".ConsoleWrite(ConsoleColor.White);
+
+			_inputBlogFilePath = Settings.Default.InputBlogFilePath;
+			_outputRssFeedFilePath = Settings.Default.OutputRssFeedFilePath;
+			_outputAtomFeedFilePath = Settings.Default.OutputAtomFeedFilePath;
+			_outputFeedTitle = Settings.Default.OutputFeedTitle;
+			_outputFeedLink = Settings.Default.OutputFeedLink;
+			_outputFeedDescription = Settings.Default.OutputFeedDescription;
+			_outputFeedCopyright = Settings.Default.OutputFeedCopyright;
+			_outputFeedGenerator = Settings.Default.OutputFeedGenerator;
+			_outputItemsNumber = Settings.Default.OutputItemsNumber;
+
+
+			if (string.IsNullOrEmpty(_inputBlogFilePath)) {
+				throw new ConfigurationErrorsException("InputBlogFilePath is missing.");
+			}
+
+			if (string.IsNullOrEmpty(_outputRssFeedFilePath)) {
+				throw new ConfigurationErrorsException("OutputRssFeedFilePath is missing.");
+			}
+
+			if (string.IsNullOrEmpty(_outputAtomFeedFilePath)) {
+				throw new ConfigurationErrorsException("OutputAtomFeedFilePath is missing.");
+			}
+
+			if (string.IsNullOrEmpty(_outputFeedTitle)) {
+				throw new ConfigurationErrorsException("OutputFeedTitle is missing.");
+			}
+
+			if (string.IsNullOrEmpty(_outputFeedLink)) {
+				throw new ConfigurationErrorsException("OutputFeedLink is missing.");
+			}
+
+			if (string.IsNullOrEmpty(_outputFeedDescription)) {
+				throw new ConfigurationErrorsException("OutputFeedDescription is missing.");
+			}
+
+			if (string.IsNullOrEmpty(_outputFeedCopyright)) {
+				throw new ConfigurationErrorsException("OutputFeedCopyright is missing");
+			}
+
+			if (string.IsNullOrEmpty(_outputFeedGenerator)) {
+				throw new ConfigurationErrorsException("OutputFeedGenerator is missing.");
+			}
+
+			"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 		}
 
 		private static async Task<List<SyndicationItem>> GetFeedItemsForBlogger(Blogger blogger, HttpClient client) {
