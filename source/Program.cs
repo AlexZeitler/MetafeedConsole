@@ -13,11 +13,16 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using MetaFeedConsole.Properties;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
 
 
 namespace MetaFeedConsole {
 	internal class Program {
 		private static void Main() {
+			IConfigurationSource configurationSource = ConfigurationSourceFactory.Create();
+			LogWriterFactory logWriterFactory = new LogWriterFactory(configurationSource);
+			Logger.SetLogWriter(logWriterFactory.Create());
 			var watch = new Stopwatch();
 			watch.Start();
 			try {
@@ -34,7 +39,7 @@ namespace MetaFeedConsole {
 
 		private static async Task MainAsync() {
 			try {
-				//// Logger.Write(new string("-".ToCharArray()[0], 80));
+				Logger.Write(new string("-".ToCharArray()[0], 80));
 
 				"DotNetGermanBloggers Meta Feed Console".ConsoleWriteLine(ConsoleColor.Yellow, false);
 				Console.WriteLine();
