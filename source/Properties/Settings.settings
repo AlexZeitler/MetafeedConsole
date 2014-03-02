@@ -11,5 +11,26 @@
     <Setting Name="OutputRssFeedFilePath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">DotNetGermanBloggersRss.xml</Value>
     </Setting>
+    <Setting Name="OutputFeedDescription" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Alle Blogs von DotNetGerman.com</Value>
+    </Setting>
+    <Setting Name="OutputFeedLink" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://blogs.dotnetgerman.com/</Value>
+    </Setting>
+    <Setting Name="OutputFeedTitle" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">DotNetGerman Bloggers</Value>
+    </Setting>
+    <Setting Name="OutputItemsNumber" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="OutputFeedImageUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:52834/images/dotnetgemanbloggers_feedlogo.png</Value>
+    </Setting>
+    <Setting Name="OutputFeedGenerator" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">DotNetGerman.com</Value>
+    </Setting>
+    <Setting Name="OutputFeedCopyright" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Copyright 2004-2014 DotNetGerman.com</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

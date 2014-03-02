@@ -20,9 +20,10 @@ using Microsoft.Practices.EnterpriseLibrary.Logging;
 namespace MetaFeedConsole {
 	internal class Program {
 		private static void Main() {
-			IConfigurationSource configurationSource = ConfigurationSourceFactory.Create();
-			LogWriterFactory logWriterFactory = new LogWriterFactory(configurationSource);
+			var configurationSource = ConfigurationSourceFactory.Create();
+			var logWriterFactory = new LogWriterFactory(configurationSource);
 			Logger.SetLogWriter(logWriterFactory.Create());
+
 			var watch = new Stopwatch();
 			watch.Start();
 			try {
@@ -50,12 +51,12 @@ namespace MetaFeedConsole {
 				var inputBlogFilePath = Settings.Default.InputBlogFilePath;
 				var outputRssFeedFilePath = Settings.Default.OutputRssFeedFilePath;
 				var outputAtomFeedFilePath = Settings.Default.OutputAtomFeedFilePath;
-				string outputFeedTitle;
-				string outputFeedLink;
-				string outputFeedDescription;
-				string outputFeedCopyright;
-				string outputFeedGenerator;
-				int outputItemsNumber;
+				var outputFeedTitle = Settings.Default.OutputFeedTitle;
+				var outputFeedLink = Settings.Default.OutputFeedLink;
+				var outputFeedDescription = Settings.Default.OutputFeedDescription;
+				var outputFeedCopyright = Settings.Default.OutputFeedCopyright;
+				var outputFeedGenerator = Settings.Default.OutputFeedGenerator;
+				var outputItemsNumber = Settings.Default.OutputItemsNumber;
 
 
 				if (string.IsNullOrEmpty(inputBlogFilePath)) {
@@ -70,60 +71,25 @@ namespace MetaFeedConsole {
 					throw new ConfigurationErrorsException("OutputAtomFeedFilePath is missing.");
 				}
 
-				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedTitle"])) {
+				if (string.IsNullOrEmpty(outputFeedTitle)) {
 					throw new ConfigurationErrorsException("OutputFeedTitle is missing.");
 				}
-				else {
-					outputFeedTitle = ConfigurationSettings.AppSettings["OutputFeedTitle"];
-				}
 
-
-				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedLink"])) {
+				if (string.IsNullOrEmpty(outputFeedLink)) {
 					throw new ConfigurationErrorsException("OutputFeedLink is missing.");
 				}
-				else {
-					outputFeedLink = ConfigurationSettings.AppSettings["OutputFeedLink"];
-				}
 
-				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedDescription"])) {
+				if (string.IsNullOrEmpty(outputFeedDescription)) {
 					throw new ConfigurationErrorsException("OutputFeedDescription is missing.");
 				}
-				else {
-					outputFeedDescription = ConfigurationSettings.AppSettings["OutputFeedDescription"];
-				}
 
-
-				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedCopyright"])) {
+				if (string.IsNullOrEmpty(outputFeedCopyright)) {
 					throw new ConfigurationErrorsException("OutputFeedCopyright is missing");
 				}
-				else {
-					outputFeedCopyright = ConfigurationSettings.AppSettings["OutputFeedCopyright"];
-				}
 
-				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedGenerator"])) {
+				if (string.IsNullOrEmpty(outputFeedGenerator)) {
 					throw new ConfigurationErrorsException("OutputFeedGenerator is missing.");
 				}
-				else {
-					outputFeedGenerator = ConfigurationSettings.AppSettings["OutputFeedGenerator"];
-				}
-
-				if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["OutputFeedImageUrl"])) {
-					throw new ConfigurationErrorsException("OutputFeedImageUrl is missing.");
-				}
-				else {
-				}
-
-
-				if (string.IsNullOrEmpty(
-					ConfigurationSettings.AppSettings["OutputItemsNumber"])) {
-					throw new ConfigurationErrorsException("OutputItemsNumber is missing.");
-				}
-				else {
-					if (!(int.TryParse(ConfigurationSettings.AppSettings["OutputItemsNumber"], out outputItemsNumber))) {
-						throw new ConfigurationErrorsException("OutputItemsNumber has an invalid format. Int32 expected.");
-					}
-				}
-
 
 				"succeeded.".ConsoleWriteLine(ConsoleColor.Green);
 

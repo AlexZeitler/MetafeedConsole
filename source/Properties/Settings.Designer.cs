@@ -49,5 +49,68 @@ namespace MetaFeedConsole.Properties {
                 return ((string)(this["OutputRssFeedFilePath"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Alle Blogs von DotNetGerman.com")]
+        public string OutputFeedDescription {
+            get {
+                return ((string)(this["OutputFeedDescription"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://blogs.dotnetgerman.com/")]
+        public string OutputFeedLink {
+            get {
+                return ((string)(this["OutputFeedLink"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DotNetGerman Bloggers")]
+        public string OutputFeedTitle {
+            get {
+                return ((string)(this["OutputFeedTitle"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int OutputItemsNumber {
+            get {
+                return ((int)(this["OutputItemsNumber"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:52834/images/dotnetgemanbloggers_feedlogo.png")]
+        public string OutputFeedImageUrl {
+            get {
+                return ((string)(this["OutputFeedImageUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DotNetGerman.com")]
+        public string OutputFeedGenerator {
+            get {
+                return ((string)(this["OutputFeedGenerator"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Copyright 2004-2014 DotNetGerman.com")]
+        public string OutputFeedCopyright {
+            get {
+                return ((string)(this["OutputFeedCopyright"]));
+            }
+        }
     }
 }
