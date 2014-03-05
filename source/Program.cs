@@ -30,10 +30,7 @@ namespace MetaFeedConsole {
 		private static int _outputItemsNumber;
 
 		private static void Main() {
-			var configurationSource = ConfigurationSourceFactory.Create();
-			var logWriterFactory = new LogWriterFactory(configurationSource);
-			Logger.SetLogWriter(logWriterFactory.Create());
-
+			
 			var watch = new Stopwatch();
 			watch.Start();
 			try {
@@ -45,12 +42,12 @@ namespace MetaFeedConsole {
 			watch.Stop();
 			string.Format("Parsed all feeds in {0}s.", watch.Elapsed.TotalSeconds.ToString(CultureInfo.InvariantCulture))
 				.ConsoleWrite(ConsoleColor.White);
-			Console.ReadLine();
+			//Console.ReadLine();
 		}
 
 		private static async Task MainAsync() {
 			try {
-				Logger.Write(new string("-".ToCharArray()[0], 80));
+				//Logger.Write(new string("-".ToCharArray()[0], 80));
 
 				"DotNetGermanBloggers Meta Feed Console".ConsoleWriteLine(ConsoleColor.Yellow, false);
 				Console.WriteLine();
@@ -96,7 +93,7 @@ namespace MetaFeedConsole {
 					var items = await GetFeedItemsForBlogger(blogger, client);
 					items.ForEach(feedItems.Add);
 				});
-				await Task.WhenAll(blogsRead);
+				await TaskEx.WhenAll(blogsRead);
 
 				var feedItemsList = feedItems.ToList();
 
